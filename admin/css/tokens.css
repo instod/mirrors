@@ -1,0 +1,149 @@
+/* ============ Mirror Admin · Tokens · 纯白中性风 ============ */
+:root {
+  --font-ui: "PingFang SC", "Segoe UI", "Microsoft YaHei", "Noto Sans SC",
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Consolas, "Courier New", monospace;
+
+  --sidebar-w: 228px;
+  --sidebar-w-collapsed: 60px;
+  --topbar-h: 52px;
+  --radius: 8px;
+  --radius-lg: 10px;
+  --radius-sm: 6px;
+
+  --fz-xs: 11px;
+  --fz-sm: 12px;
+  --fz-md: 13.5px;
+  --fz-lg: 15px;
+  --fz-xl: 17px;
+
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px;
+}
+
+/* 纯白：白底 + 中性灰，无蓝色 */
+html[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f4f4f5;
+  --bg-soft: #fafafa;
+  --panel: #ffffff;
+  --panel-2: #f7f7f8;
+  --panel-hover: #f0f0f1;
+  --border: #e4e4e7;
+  --border-soft: #eeeeef;
+  --text: #18181b;
+  --text-dim: #52525b;
+  --text-mute: #a1a1aa;
+
+  --sidebar-bg: #ffffff;
+  --sidebar-bg-2: #ffffff;
+  --sidebar-text: #3f3f46;
+  --sidebar-text-mute: #a1a1aa;
+  --sidebar-hover: rgba(22, 119, 210, .08);
+  --sidebar-active: #1677d2;
+  --sidebar-active-text: #ffffff;
+  --sidebar-border: #e4e4e7;
+  --sidebar-brand-sub: #71717a;
+
+  --brand: #27272a;
+  --brand-strong: #18181b;
+  --brand-text: #18181b;
+  --brand-bg: rgba(24, 24, 27, .06);
+  --brand-bd: rgba(24, 24, 27, .16);
+  --accent: #3f3f46;
+  --accent-bg: rgba(63, 63, 70, .08);
+
+  --ok: #16a34a; --ok-bg: rgba(22, 163, 74, .08); --ok-bd: rgba(22, 163, 74, .22);
+  --warn: #ca8a04; --warn-bg: rgba(202, 138, 4, .08); --warn-bd: rgba(202, 138, 4, .22);
+  --danger: #dc2626; --danger-bg: rgba(220, 38, 38, .07); --danger-bd: rgba(220, 38, 38, .22);
+  --info: #52525b; --info-bg: rgba(82, 82, 91, .07); --info-bd: rgba(82, 82, 91, .18);
+  --purple: #6b7280; --purple-bg: rgba(107, 114, 128, .08);
+  --muted-bg: #f4f4f5;
+  --text-bg: rgba(24, 24, 27, .04);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .04), 0 1px 3px rgba(0, 0, 0, .03);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, .06), 0 4px 16px rgba(0, 0, 0, .04);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, .08), 0 12px 32px rgba(0, 0, 0, .06);
+  --ring: rgba(24, 24, 27, .18);
+
+  --code-bg: #18181b;
+  --scroll-thumb: #d4d4d8;
+  --skel: linear-gradient(90deg, #eeeeef 25%, #f7f7f8 50%, #eeeeef 75%);
+  --nav-active-bar: #ffffff;
+  --topbar-bg: rgba(255, 255, 255, .92);
+  --login-aside-bg: linear-gradient(155deg, #083a6b 0%, #0b4f8f 42%, #0a3a66 100%);
+  --login-panel-bg: #f7f8fa;
+  --paper: none;
+
+  /* 按钮专用蓝（页面整体仍为白底中性） */
+  --btn: #1677d2;
+  --btn-hover: #0f66bc;
+  --btn-active: #0b5399;
+  --btn-bg: rgba(22, 119, 210, .08);
+  --btn-bd: rgba(22, 119, 210, .28);
+  --btn-text: #0f66bc;
+  --btn-shadow: 0 1px 2px rgba(15, 102, 188, .22);
+  --btn-shadow-hover: 0 2px 8px rgba(15, 102, 188, .30);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #09090b;
+  --bg-soft: #111113;
+  --panel: #18181b;
+  --panel-2: #1f1f23;
+  --panel-hover: #27272a;
+  --border: #2e2e33;
+  --border-soft: #232327;
+  --text: #fafafa;
+  --text-dim: #a1a1aa;
+  --text-mute: #71717a;
+
+  --sidebar-bg: #111113;
+  --sidebar-bg-2: #111113;
+  --sidebar-text: #d4d4d8;
+  --sidebar-text-mute: #71717a;
+  --sidebar-hover: rgba(59, 154, 239, .14);
+  --sidebar-active: #3b9aef;
+  --sidebar-active-text: #ffffff;
+  --sidebar-border: #2e2e33;
+  --sidebar-brand-sub: #71717a;
+
+  --brand: #e4e4e7;
+  --brand-strong: #fafafa;
+  --brand-text: #fafafa;
+  --brand-bg: rgba(250, 250, 250, .08);
+  --brand-bd: rgba(250, 250, 250, .18);
+  --accent: #d4d4d8;
+  --accent-bg: rgba(212, 212, 216, .10);
+
+  --ok: #4ade80; --ok-bg: rgba(74, 222, 128, .10); --ok-bd: rgba(74, 222, 128, .28);
+  --warn: #facc15; --warn-bg: rgba(250, 204, 21, .10); --warn-bd: rgba(250, 204, 21, .28);
+  --danger: #f87171; --danger-bg: rgba(248, 113, 113, .10); --danger-bd: rgba(248, 113, 113, .28);
+  --info: #a1a1aa; --info-bg: rgba(161, 161, 170, .10); --info-bd: rgba(161, 161, 170, .28);
+  --purple: #a1a1aa; --purple-bg: rgba(161, 161, 170, .10);
+  --muted-bg: rgba(161, 161, 170, .10);
+  --text-bg: rgba(250, 250, 250, .05);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4);
+  --shadow-md: 0 3px 10px rgba(0, 0, 0, .45);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, .5);
+  --ring: rgba(250, 250, 250, .22);
+
+  --code-bg: #09090b;
+  --scroll-thumb: #3f3f46;
+  --skel: linear-gradient(90deg, #18181b 25%, #1f1f23 50%, #18181b 75%);
+  --nav-active-bar: #18181b;
+  --topbar-bg: rgba(24, 24, 27, .94);
+  --login-aside-bg: linear-gradient(155deg, #071018 0%, #0c2740 48%, #0a3f72 100%);
+  --login-panel-bg: #111113;
+  --paper: none;
+
+  --btn: #3b9aef;
+  --btn-hover: #5ba8e8;
+  --btn-active: #2b7fc9;
+  --btn-bg: rgba(59, 154, 239, .14);
+  --btn-bd: rgba(59, 154, 239, .36);
+  --btn-text: #9fd0ff;
+  --btn-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+  --btn-shadow-hover: 0 2px 8px rgba(59, 154, 239, .28);
+}

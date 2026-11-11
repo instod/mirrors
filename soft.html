@@ -1,0 +1,4123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TIB软件源配置 · 中国科学院天津工业生物技术研究所数据镜像站</title>
+  <link rel="stylesheet" href="page-transition.css?v=3" />
+  <script>(function(){try{var r=sessionStorage.getItem("pt-nav");if(!r)return;var m=r.charAt(0)==="{"?JSON.parse(r).mode:r;if(m==="1"||m==="veil")document.documentElement.classList.add("pt-boot");}catch(e){}})();</script>
+  <style>
+    /* 内网镜像站：不用 Google Fonts @import，避免外网不可达拖慢首屏 */
+    :root {
+      --brand-900: #002a4a;
+      --brand-800: #003f6a;
+      --brand-700: #00529b;
+      --brand-600: #005fb6;
+      --brand-500: #1f78d1;
+      --brand-400: #4196e6;
+      --brand-300: #7aabe8;
+      --brand-200: #b8d4f3;
+      --brand-100: #eaf3ff;
+      --brand-50: #f6fbff;
+      --primary-color: var(--brand-700);
+      --page-bg: #f3f7fc;
+      --surface: #ffffff;
+      --surface-soft: #f7faff;
+      --surface-2: #fafcff;
+      --border: #e2ebf6;
+      --border-soft: #eef3fa;
+      --text-color: #0c1b2c;
+      --text-soft: #2c3a4f;
+      --muted: #5b6b82;
+      --muted-2: #94a3b8;
+      --success: #0f7a3a;
+      --success-bg: #f0fdf4;
+      --success-border: #bbf7d0;
+      --warning: #a8540a;
+      --warning-bg: #fffaf0;
+      --warning-border: #fde4b8;
+      --danger: #b11919;
+      --danger-bg: #fef5f5;
+      --danger-border: #fecaca;
+      --info: #1750c2;
+      --info-bg: #f1f6ff;
+      --info-border: #c7d9f8;
+      --shadow-1: 0 1px 2px rgba(15, 38, 84, 0.04), 0 6px 18px rgba(15, 38, 84, 0.05);
+      --shadow-2: 0 2px 4px rgba(15, 38, 84, 0.04), 0 16px 36px rgba(15, 38, 84, 0.08);
+      --shadow-3: 0 4px 8px rgba(15, 38, 84, 0.05), 0 24px 60px rgba(15, 38, 84, 0.12);
+      --radius-xl: 20px;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-sm: 8px;
+      --font-sans: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", "Helvetica Neue", "Hiragino Sans GB", "Segoe UI", Arial, sans-serif;
+      --font-display: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", "Helvetica Neue", "Hiragino Sans GB", "Segoe UI", Arial, sans-serif;
+      --font-mono: "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code", Consolas, "Source Code Pro", Monaco, monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      font-feature-settings: "tnum" 1, "cv11" 1, "ss01" 1, "kern" 1;
+      font-synthesis: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      background:
+        radial-gradient(1200px 600px at 50% -160px, rgba(31, 120, 209, 0.16), transparent 60%),
+        radial-gradient(1000px 600px at 90% 20%, rgba(122, 171, 232, 0.08), transparent 60%),
+        linear-gradient(180deg, #edf3fb 0%, #f8fbff 35%, #edf3fb 100%);
+      background-attachment: fixed;
+      color: var(--text-color);
+      padding: 8.8rem 0 3rem 0;
+      min-height: 100vh;
+      line-height: 1.85;
+      font-size: 15px;
+      letter-spacing: 0.015em;
+    }
+
+    /* ========== Header ========== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 95%;
+      max-width: 1700px;
+      height: 124px;
+      background:
+        linear-gradient(135deg, var(--brand-900) 0%, var(--brand-700) 60%, var(--brand-800) 100%);
+      padding: 0 2.2rem;
+      border-radius: 0 0 20px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.4rem;
+      box-shadow:
+        0 20px 50px rgba(0, 42, 74, 0.40),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      z-index: 9999;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 88% 50%, rgba(255, 255, 255, 0.18), transparent 45%),
+        radial-gradient(circle at 12% 100%, rgba(65, 150, 230, 0.20), transparent 50%);
+      pointer-events: none;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      pointer-events: none;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+      min-width: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    header img.logo {
+      height: 82px;
+      width: auto;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.30));
+    }
+
+    .header-titles { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+
+    .header-titles h1 {
+      color: #fff;
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      white-space: nowrap;
+      font-family: var(--font-display);
+    }
+
+    .header-titles .header-sub {
+      color: rgba(220, 235, 255, 0.92);
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-family: var(--font-sans);
+    }
+
+    .header-nav { display: flex; align-items: center; gap: 10px; position: relative; z-index: 1; }
+
+    .header-nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 18px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      border-radius: 999px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(8px);
+      letter-spacing: 0.02em;
+    }
+
+    .header-nav a:hover {
+      background: #fff;
+      color: var(--brand-800);
+      border-color: transparent;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.20);
+      transform: translateY(-1px);
+    }
+
+    .header-nav a svg { width: 14px; height: 14px; }
+
+    .container { width: 95%; max-width: 1700px; margin: 0 auto; padding: 0 2rem; }
+    .layout { display: grid; grid-template-columns: 290px 1fr; gap: 24px; align-items: start; }
+
+    /* ========== Sidebar Nav ========== */
+    .nav {
+      position: sticky;
+      top: 8.8rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-1);
+      overflow: hidden;
+      max-height: calc(100vh - 9.2rem);
+      overflow-y: auto;
+    }
+
+    .nav::-webkit-scrollbar { width: 6px; }
+    .nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    .nav::-webkit-scrollbar-track { background: transparent; }
+
+    .nav-header {
+      padding: 18px 22px 16px;
+      background:
+        linear-gradient(135deg, var(--brand-100) 0%, rgba(234, 243, 255, 0.5) 100%);
+      border-bottom: 1px solid var(--border-soft);
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      position: relative;
+    }
+
+    .nav-header::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 22px;
+      right: 22px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--brand-200), transparent);
+    }
+
+    .nav-header svg {
+      width: 16px;
+      height: 16px;
+      color: var(--brand-700);
+    }
+
+    .nav-header span {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--brand-800);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-family: var(--font-sans);
+    }
+
+    .nav-group { padding: 6px 0 10px; }
+    .nav-group + .nav-group { border-top: 1px solid var(--border-soft); }
+
+    .nav-group-title {
+      padding: 12px 22px 6px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--muted-2);
+      text-transform: uppercase;
+      font-family: var(--font-sans);
+    }
+
+    .nav a {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 10px 22px 10px 19px;
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.87rem;
+      font-weight: 500;
+      border-left: 3px solid transparent;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      letter-spacing: 0.02em;
+    }
+
+    .nav a .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--brand-300);
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .nav a:hover {
+      background: var(--surface-soft);
+      color: var(--brand-700);
+    }
+
+    .nav a.active {
+      background: linear-gradient(90deg, var(--brand-100) 0%, transparent 100%);
+      color: var(--brand-800);
+      font-weight: 700;
+      border-left-color: var(--brand-700);
+    }
+
+    .nav a.active .dot { background: var(--brand-700); transform: scale(1.4); }
+
+    /* ========== Content ========== */
+    .content {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-1);
+      padding: 48px 52px;
+      min-height: 600px;
+      position: relative;
+    }
+
+    .source-panel { display: none; animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .source-panel.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ========== Headings ========== */
+    .source-panel h1 {
+      font-size: 1.95rem;
+      font-weight: 700;
+      color: var(--brand-900);
+      margin-bottom: 14px;
+      letter-spacing: 0.01em;
+      font-family: var(--font-display);
+      position: relative;
+      padding-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .source-panel h1::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 56px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--brand-700), var(--brand-400));
+      border-radius: 2px;
+    }
+
+    .source-panel .lead {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-soft);
+      line-height: 1.9;
+      letter-spacing: 0.02em;
+      max-width: 820px;
+    }
+
+    .source-panel h2 {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--brand-800);
+      margin: 38px 0 14px;
+      padding-left: 16px;
+      border-left: 4px solid var(--brand-500);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      letter-spacing: 0.015em;
+      line-height: 1.5;
+    }
+
+    .source-panel h2 .h-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 24px;
+      height: 24px;
+      padding: 0 9px;
+      background: linear-gradient(135deg, var(--brand-700), var(--brand-500));
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      box-shadow: 0 2px 6px rgba(31, 120, 209, 0.30);
+      letter-spacing: 0.02em;
+    }
+
+    .source-panel p {
+      color: var(--text-soft);
+      margin-bottom: 14px;
+      font-size: 0.94rem;
+      line-height: 1.95;
+      letter-spacing: 0.015em;
+    }
+
+    .source-panel code.inline {
+      background: var(--brand-100);
+      color: var(--brand-700);
+      padding: 2px 8px;
+      border-radius: 5px;
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      border: 1px solid rgba(0, 95, 182, 0.12);
+      letter-spacing: 0;
+      font-weight: 500;
+    }
+
+    /* ========== Callouts ========== */
+    .callout {
+      display: flex;
+      gap: 16px;
+      padding: 18px 22px;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      margin: 20px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .callout::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+    }
+
+    .callout-icon {
+      flex-shrink: 0;
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    .callout-icon svg { width: 18px; height: 18px; }
+    .callout-body { flex: 1; min-width: 0; }
+    .callout-body strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.93rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .callout-body p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.85;
+      letter-spacing: 0.015em;
+    }
+
+    .callout.tip { background: var(--info-bg); border-color: var(--info-border); }
+    .callout.tip::before { background: var(--info); }
+    .callout.tip .callout-icon { background: #fff; color: var(--info); }
+    .callout.tip strong { color: var(--info); }
+
+    .callout.success { background: var(--success-bg); border-color: var(--success-border); }
+    .callout.success::before { background: var(--success); }
+    .callout.success .callout-icon { background: #fff; color: var(--success); }
+    .callout.success strong { color: var(--success); }
+
+    /* ========== 通道选择 ========== */
+    .channel-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 14px 0 18px;
+    }
+
+    .channel-label {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    select {
+      height: 40px;
+      min-width: 200px;
+      padding: 0 2.2rem 0 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background-color: var(--surface);
+      color: var(--text-color);
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231f78d1' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.8rem center;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    select:hover { border-color: var(--brand-300); }
+    select:focus {
+      border-color: var(--brand-500);
+      box-shadow: 0 0 0 4px rgba(31, 120, 209, 0.14);
+    }
+
+    /* ========== Code Block（Mac 风格 + 复制按钮）========== */
+    .code-block {
+      position: relative;
+      margin: 20px 0 24px;
+      background: linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+      color: #1e293b;
+      border-radius: 12px;
+      padding: 38px 24px 22px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.86rem;
+      line-height: 1.9;
+      font-feature-settings: "calt" 0, "liga" 0;
+      box-shadow:
+        0 1px 2px rgba(15, 38, 84, 0.04),
+        0 8px 24px rgba(15, 38, 84, 0.06);
+      border: 1px solid var(--border);
+    }
+
+    .code-block::before {
+      content: "";
+      position: absolute;
+      top: 14px;
+      left: 18px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ff5f57;
+      box-shadow:
+        20px 0 0 #febc2e,
+        40px 0 0 #28c840;
+    }
+
+    .code-block .lang {
+      position: absolute;
+      top: 14px;
+      right: 76px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--brand-700);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 2px 12px;
+      background: var(--brand-50);
+      border: 1px solid var(--brand-200);
+      border-radius: 999px;
+      font-family: var(--font-sans);
+      line-height: 1.5;
+    }
+
+    .code-block code {
+      display: block;
+      white-space: pre;
+      color: #1e293b;
+      letter-spacing: 0;
+    }
+
+    .code-block::-webkit-scrollbar { height: 8px; }
+    .code-block::-webkit-scrollbar-track { background: transparent; }
+    .code-block::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    .code-block::-webkit-scrollbar-thumb:hover { background: var(--brand-200); }
+
+    .copy-btn {
+      position: absolute;
+      top: 11px;
+      right: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      color: var(--brand-700);
+      background: var(--surface);
+      border: 1px solid var(--brand-200);
+      border-radius: 999px;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: all 0.2s ease;
+      z-index: 2;
+    }
+
+    .copy-btn svg { width: 13px; height: 13px; }
+
+    .copy-btn:hover {
+      background: var(--brand-700);
+      color: #fff;
+      border-color: var(--brand-700);
+      box-shadow: 0 4px 12px rgba(0, 82, 155, 0.25);
+    }
+
+    .copy-btn.copied {
+      background: var(--success);
+      color: #fff;
+      border-color: var(--success);
+    }
+
+    /* ========== URL 展示框 ========== */
+    .url-box {
+      display: grid;
+      grid-template-columns: 130px minmax(0, 1fr) 74px;
+      align-items: stretch;
+      margin: 16px 0 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-1);
+    }
+
+    .url-label {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      background: linear-gradient(180deg, #f4f9ff, #eaf3ff);
+      border-right: 1px solid var(--border);
+      color: var(--brand-800);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: var(--font-sans);
+    }
+
+    .url-value {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      padding: 12px 16px;
+    }
+
+    .url-value code {
+      width: 100%;
+      overflow-x: auto;
+      color: var(--brand-700);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      white-space: nowrap;
+      letter-spacing: 0;
+      scrollbar-width: thin;
+    }
+
+    .url-value code::-webkit-scrollbar { height: 4px; }
+    .url-value code::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .url-copy {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      border: 0;
+      border-left: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--brand-700);
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: all 0.2s ease;
+    }
+
+    .url-copy svg { width: 13px; height: 13px; }
+
+    .url-copy:hover {
+      background: var(--brand-100);
+      color: var(--brand-800);
+    }
+
+    .url-copy.copied {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    /* ========== 折叠面板（手动修改 / sed）========== */
+    .fold-item {
+      margin-top: 26px;
+      border-top: 1px dashed var(--border);
+      padding-top: 18px;
+    }
+
+    .fold-q {
+      padding: 13px 20px;
+      font-weight: 600;
+      color: var(--brand-800);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--surface-soft);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      transition: background 0.2s ease, border-color 0.2s ease;
+      font-size: 0.93rem;
+      letter-spacing: 0.015em;
+      line-height: 1.6;
+      user-select: none;
+    }
+
+    .fold-q:hover { background: var(--brand-50); border-color: var(--brand-200); }
+
+    .fold-q::after {
+      content: "+";
+      color: var(--brand-500);
+      font-size: 1.25rem;
+      font-weight: 400;
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .fold-item.open .fold-q::after {
+      content: "−";
+      color: #fff;
+      background: var(--brand-700);
+      border-color: var(--brand-700);
+    }
+
+    .fold-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .fold-item.open .fold-a { max-height: 900px; }
+
+    .fold-a-inner { padding-top: 16px; }
+
+    /* ========== Footer ========== */
+    .doc-footer {
+      max-width: 1700px;
+      margin: 1.4rem auto 0;
+      padding: 22px 28px;
+      background: var(--surface);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-1);
+      text-align: center;
+    }
+
+    .doc-footer p {
+      color: var(--muted);
+      font-size: 0.86rem;
+      letter-spacing: 0.025em;
+    }
+
+    .doc-footer .footer-tech {
+      margin-top: 6px;
+      color: var(--muted-2);
+      font-size: 0.76rem;
+      letter-spacing: 0.14em;
+    }
+
+    .os-filter-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-soft);
+      user-select: none;
+      cursor: pointer;
+    }
+    .os-filter-toggle input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--brand-700);
+    }
+    .panel-adapt {
+      margin: 0 0 18px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--brand-200);
+      background: linear-gradient(180deg, var(--brand-50), #fff);
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      line-height: 1.7;
+    }
+    .panel-adapt strong { color: var(--brand-800); }
+    .panel-adapt code {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--brand-700);
+      word-break: break-all;
+    }
+    .os-picker {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    .os-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+    .os-field > span {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .os-field select {
+      width: 100%;
+      min-width: 0;
+    }
+    .os-summary {
+      display: grid;
+      gap: 8px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-soft);
+      background: var(--surface);
+      font-size: 0.86rem;
+      color: var(--text-soft);
+      line-height: 1.7;
+    }
+    .os-summary .sum-row {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+    .os-summary .sum-k {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding-top: 2px;
+    }
+    .os-summary .sum-v code,
+    .os-summary .sum-v a {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--brand-700);
+      word-break: break-all;
+    }
+    .os-summary .sum-v a { text-decoration: none; }
+    .os-summary .sum-v a:hover { text-decoration: underline; }
+    @media (max-width: 900px) {
+      .os-picker { grid-template-columns: 1fr; }
+      .os-summary .sum-row { grid-template-columns: 1fr; gap: 2px; }
+    }
+
+
+    /* ========== 系统设置条 / Ctrl+K 弹层 ========== */
+    .adapt-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 18px;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: linear-gradient(180deg, #f8fbff, #ffffff);
+      box-shadow: var(--shadow-1);
+    }
+    .adapt-strip-main {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 14px;
+      min-width: 0;
+    }
+    .adapt-strip-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+      min-width: 0;
+      appearance: none;
+      border: none;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
+    }
+    .adapt-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brand-700);
+      background: var(--brand-50);
+      border: 1px solid var(--brand-200);
+      border-radius: 999px;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+    .adapt-current {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--brand-800);
+    }
+    .adapt-hint {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    .adapt-hint kbd {
+      display: inline-block;
+      padding: 1px 6px;
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      border-radius: 6px;
+      background: var(--surface);
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--brand-800);
+    }
+    .adapt-change {
+      white-space: nowrap;
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 700;
+      font-family: inherit;
+      color: var(--brand-700);
+      padding: 7px 12px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+    }
+    .adapt-change:hover {
+      color: #fff;
+      background: linear-gradient(135deg, var(--brand-600), var(--brand-800));
+      border-color: transparent;
+    }
+
+    .header-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 18px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      font-family: inherit;
+      color: #fff;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      background: rgba(255, 255, 255, 0.10);
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(8px);
+      letter-spacing: 0.02em;
+    }
+    .header-nav-btn:hover {
+      background: #fff;
+      color: var(--brand-800);
+      border-color: transparent;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.20);
+      transform: translateY(-1px);
+    }
+    .header-nav-btn:hover .hdr-kbd {
+      border-color: rgba(0, 63, 106, 0.25);
+      color: var(--brand-800);
+    }
+    .header-nav-btn svg { width: 14px; height: 14px; }
+    .hdr-kbd {
+      margin-left: 2px;
+      padding: 1px 6px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 5px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      opacity: 0.9;
+    }
+
+    .os-modal[hidden] { display: none !important; }
+    .os-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10050;
+      display: grid;
+      place-items: start center;
+      padding: 12vh 16px 24px;
+    }
+    .os-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 22, 40, 0.48);
+      backdrop-filter: blur(4px);
+    }
+    .os-modal-panel {
+      position: relative;
+      width: min(720px, 100%);
+      max-height: min(78vh, 820px);
+      overflow: auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background:
+        radial-gradient(700px 180px at 0% 0%, rgba(31, 120, 209, 0.10), transparent 55%),
+        linear-gradient(180deg, #f8fbff, #ffffff);
+      box-shadow: var(--shadow-3);
+      padding: 20px 22px 16px;
+      display: grid;
+      gap: 14px;
+    }
+    .os-modal-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .os-modal-head h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--brand-900);
+      letter-spacing: 0.02em;
+    }
+    .os-modal-sub {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+    .os-modal-x {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 1.35rem;
+      line-height: 1;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .os-modal-x:hover { color: var(--brand-800); border-color: var(--brand-300); }
+    .os-modal-foot {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 4px;
+    }
+    .os-modal-tip { color: var(--muted); font-size: 0.8rem; }
+    .os-modal-tip kbd {
+      display: inline-block;
+      padding: 1px 6px;
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      border-radius: 6px;
+      background: var(--surface);
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--brand-800);
+    }
+    .os-modal-done {
+      appearance: none;
+      border: none;
+      border-radius: 10px;
+      padding: 9px 16px;
+      font: inherit;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      color: #fff;
+      background: linear-gradient(135deg, var(--brand-600), var(--brand-800));
+      box-shadow: 0 10px 22px rgba(0, 95, 182, 0.22);
+    }
+    .os-modal-done:hover { filter: brightness(1.05); }
+    body.os-modal-open { overflow: hidden; }
+    .os-modal:not([hidden]) .os-modal-backdrop {
+      animation: osFade .18s ease;
+    }
+    .os-modal:not([hidden]) .os-modal-panel {
+      animation: osPop .22s cubic-bezier(0.2, 0.9, 0.2, 1);
+    }
+    @keyframes osFade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes osPop {
+      from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .os-filter-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: var(--text-soft);
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+    }
+    .os-filter-toggle input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--brand-700);
+    }
+    .os-modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 14px;
+    }
+    .os-detect-btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--brand-700);
+      border-radius: 9px;
+      padding: 7px 12px;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .os-detect-btn:hover {
+      border-color: var(--brand-300);
+      background: var(--brand-50);
+    }
+    @media (max-width: 768px) {
+      .hdr-kbd { display: none; }
+      .header-nav-btn { padding: 8px 12px; font-size: 0.8rem; }
+      .os-modal { padding: 8vh 10px 16px; place-items: start stretch; }
+    }
+
+    /* ========== 智能助手 / 搜索 ========== */
+    .smart-bar {
+      display: grid;
+      gap: 14px;
+      margin: 0 0 22px;
+      padding: 18px 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(800px 200px at 0% 0%, rgba(31, 120, 209, 0.10), transparent 55%),
+        linear-gradient(180deg, #f8fbff, #ffffff);
+      box-shadow: var(--shadow-1);
+    }
+    .smart-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .smart-detect {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 12px;
+      min-width: 0;
+    }
+    .smart-detect .smart-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--brand-700);
+      background: var(--brand-50);
+      border: 1px solid var(--brand-200);
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
+    .smart-detect .smart-meta {
+      color: var(--text-soft);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .smart-detect .smart-meta strong { color: var(--brand-800); font-weight: 700; }
+    .smart-hint { color: var(--muted); font-size: 0.8rem; }
+    .smart-hint kbd {
+      display: inline-block;
+      padding: 1px 6px;
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      border-radius: 6px;
+      background: var(--surface);
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--brand-800);
+    }
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .chip-row .chip-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      margin-right: 2px;
+    }
+    .chip {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-soft);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .chip:hover {
+      border-color: var(--brand-300);
+      color: var(--brand-800);
+      background: var(--brand-50);
+    }
+    .chip.active {
+      border-color: var(--brand-500);
+      background: linear-gradient(180deg, var(--brand-100), #fff);
+      color: var(--brand-800);
+      box-shadow: 0 0 0 3px rgba(31, 120, 209, 0.12);
+    }
+    .chip.rec {
+      border-color: var(--success-border);
+      background: var(--success-bg);
+      color: var(--success);
+    }
+    .chip.ghost { opacity: 0.78; }
+    .nav-search-wrap {
+      padding: 12px 14px 8px;
+      border-bottom: 1px solid var(--border-soft);
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      z-index: 2;
+    }
+    .nav-search {
+      width: 100%;
+      height: 38px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0 12px 0 36px;
+      font-family: var(--font-sans);
+      font-size: 0.86rem;
+      color: var(--text-color);
+      background:
+        url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235b6b82' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M21 21l-4.3-4.3'/%3E%3C/svg%3E") 12px center / 14px no-repeat,
+        var(--surface-soft);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .nav-search:focus {
+      border-color: var(--brand-500);
+      box-shadow: 0 0 0 4px rgba(31, 120, 209, 0.14);
+      background-color: #fff;
+    }
+    .nav-search::placeholder { color: var(--muted-2); }
+    .nav a[hidden], .nav-group[hidden] { display: none !important; }
+    .nav-empty {
+      display: none;
+      padding: 18px 22px 22px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+    .nav-empty.show { display: block; }
+    .nav a .badge-rec {
+      margin-left: auto;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--success);
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
+      border-radius: 999px;
+      padding: 1px 7px;
+    }
+    .toast-host {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+    .toast {
+      min-width: 180px;
+      max-width: 320px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: rgba(0, 42, 74, 0.92);
+      color: #fff;
+      font-size: 0.86rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-3);
+      transform: translateY(8px);
+      opacity: 0;
+      animation: toastIn 0.25s ease forwards;
+    }
+    .toast.ok { background: rgba(15, 122, 58, 0.95); }
+    @keyframes toastIn {
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .toast { animation: none; opacity: 1; transform: none; }
+    }
+
+    /* ========== 响应式 ========== */
+    @media (max-width: 1100px) {
+      .layout { grid-template-columns: 240px 1fr; }
+      .container { padding: 0 1rem; }
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .nav { position: static; max-height: none; }
+      .nav-group { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 12px 12px; }
+      .nav-group-title { width: 100%; padding: 8px 12px 2px; }
+      .nav a { border-left: 0; border-radius: 999px; padding: 8px 16px; background: var(--surface-soft); }
+      .nav a.active { background: var(--brand-100); border-radius: 999px; }
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 7.8rem 0 2rem 0; }
+      header { width: 100%; left: 0; transform: none; border-radius: 0 0 18px 18px; }
+      .header-titles h1 { font-size: 1.15rem; }
+      .header-nav a { padding: 8px 12px; font-size: 0.8rem; }
+      .content { padding: 26px 20px; }
+      .source-panel h1 { font-size: 1.5rem; }
+      .url-box { grid-template-columns: minmax(0, 1fr) 64px; }
+      .url-label { display: none; }
+      .channel-row { flex-direction: column; align-items: stretch; }
+      select { width: 100%; }
+      .code-block .lang { display: none; }
+      .smart-bar { padding: 14px; }
+      .smart-hint { display: none; }
+      .toast-host { right: 12px; bottom: 12px; left: 12px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="header-brand">
+      <img src="logo.png" alt="中科院Logo" class="logo" />
+      <div class="header-titles">
+        <h1>TIB软件源配置</h1>
+        <span class="header-sub">TIB Mirrors · Software Sources</span>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <a href="doc.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        使用指南
+      </a>
+      <a href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7"></path>
+        </svg>
+        返回首页
+      </a>
+    </nav>
+  </header>
+
+  <div class="toast-host" id="toastHost" aria-live="polite"></div>
+  <div class="container">
+    <div class="layout">
+      <nav class="nav" aria-label="软件源目录">
+        <div class="nav-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M8 21h8M12 17v4"></path>
+          </svg>
+          <span>软件源</span>
+        </div>
+        <div class="nav-search-wrap">
+          <input type="search" id="navSearch" class="nav-search" placeholder="搜索软件源…  按 /" autocomplete="off" aria-label="搜索软件源" />
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">包管理器</div>
+          <a href="#" data-source="conda" data-tags="conda anaconda miniconda bioconda forge" data-fit="all" class="active"><span class="dot"></span>Conda</a>
+          <a href="#" data-source="pypi" data-tags="pypi pip python uv poetry" data-fit="all"><span class="dot"></span>PyPI（pip）</a>
+          <a href="#" data-source="go" data-tags="go golang" data-fit="all"><span class="dot"></span>Go（golang）</a>
+          <a href="#" data-source="rust" data-tags="rust rustup cargo" data-fit="all"><span class="dot"></span>Rust（rustup）</a>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">APT 软件源</div>
+          <a href="#" data-source="ubuntu" data-tags="ubuntu apt deb" data-fit="debian"><span class="dot"></span>Ubuntu</a>
+          <a href="#" data-source="debian" data-tags="debian apt deb" data-fit="debian"><span class="dot"></span>Debian</a>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">YUM/DNF 软件源</div>
+          <a href="#" data-source="rhel" data-tags="rhel redhat yum dnf" data-fit="rhel"><span class="dot"></span>RHEL</a>
+          <a href="#" data-source="centos-stream" data-tags="centos stream rhel yum dnf" data-fit="rhel"><span class="dot"></span>CentOS Stream</a>
+          <a href="#" data-source="rocky" data-tags="rocky rhel yum dnf" data-fit="rhel"><span class="dot"></span>Rocky Linux</a>
+          <a href="#" data-source="almalinux" data-tags="alma almalinux rhel yum dnf" data-fit="rhel"><span class="dot"></span>AlmaLinux</a>
+          <a href="#" data-source="fedora" data-tags="fedora dnf yum" data-fit="fedora"><span class="dot"></span>Fedora</a>
+          <a href="#" data-source="openeuler" data-tags="openeuler euler yum dnf" data-fit="rhel"><span class="dot"></span>openEuler</a>
+          <a href="#" data-source="opensuse" data-tags="opensuse suse leap zypper" data-fit="suse"><span class="dot"></span>openSUSE</a>
+          <a href="#" data-source="epel" data-tags="epel rhel yum dnf" data-fit="rhel"><span class="dot"></span>EPEL</a>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">容器与编排</div>
+          <a href="#" data-source="docker" data-tags="docker container" data-fit="all"><span class="dot"></span>Docker CE</a>
+          <a href="#" data-source="kubernetes" data-tags="kubernetes k8s kubeadm" data-fit="all"><span class="dot"></span>Kubernetes</a>
+          <a href="#" data-source="apptainer" data-tags="apptainer singularity hpc" data-fit="all"><span class="dot"></span>Apptainer</a>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">数据库</div>
+          <a href="#" data-source="mysql" data-tags="mysql database" data-fit="all"><span class="dot"></span>MySQL</a>
+          <a href="#" data-source="mongodb" data-tags="mongodb mongo database" data-fit="all"><span class="dot"></span>MongoDB</a>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">编程语言</div>
+          <a href="#" data-source="python" data-tags="python cpython" data-fit="all"><span class="dot"></span>Python</a>
+          <a href="#" data-source="julia" data-tags="julia" data-fit="all"><span class="dot"></span>Julia</a>
+          <a href="#" data-source="nodejs" data-tags="node npm nodejs javascript" data-fit="all"><span class="dot"></span>Node.js</a>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">HPC 软件</div>
+          <a href="#" data-source="spack" data-tags="spack hpc" data-fit="all"><span class="dot"></span>Spack</a>
+          <a href="#" data-source="nvidia" data-tags="nvidia cuda gpu" data-fit="all"><span class="dot"></span>NVIDIA/CUDA</a>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">R 语言/生信</div>
+          <a href="#" data-source="cran" data-tags="cran r" data-fit="all"><span class="dot"></span>CRAN</a>
+          <a href="#" data-source="bioconductor" data-tags="bioconductor bioc r" data-fit="all"><span class="dot"></span>Bioconductor</a>
+        </div>
+        <div class="nav-empty" id="navEmpty">没有匹配的软件源，试试 pip / docker / cuda</div>
+      </nav>
+
+      <main class="content">
+
+        <div class="adapt-strip" id="adaptStrip">
+          <div class="adapt-strip-main">
+            <button type="button" class="adapt-strip-link" id="adaptStripOpen" title="系统设置（Ctrl+K）">
+              <span class="adapt-pill">系统设置</span>
+              <span class="adapt-current" id="adaptCurrent">未选择系统</span>
+            </button>
+            <span class="adapt-hint">按 <kbd>Ctrl</kbd>+<kbd>K</kbd> 打开设置 · <kbd>/</kbd> 搜索软件源</span>
+          </div>
+          <button type="button" class="adapt-change" id="adaptChangeBtn">更改系统</button>
+        </div>
+
+        <div class="os-modal" id="osModal" hidden aria-hidden="true">
+          <div class="os-modal-backdrop" data-os-close></div>
+          <div class="os-modal-panel" role="dialog" aria-modal="true" aria-labelledby="osModalTitle">
+            <div class="os-modal-head">
+              <div>
+                <h2 id="osModalTitle">系统设置</h2>
+                <p class="os-modal-sub">选择操作系统后，本页命令与适配 URL 会立即更新</p>
+              </div>
+              <button type="button" class="os-modal-x" data-os-close aria-label="关闭">×</button>
+            </div>
+            <div class="os-picker">
+              <label class="os-field">
+                <span>操作系统</span>
+                <select id="osSelect" aria-label="选择操作系统"></select>
+              </label>
+              <label class="os-field">
+                <span>版本</span>
+                <select id="verSelect" aria-label="选择版本"></select>
+              </label>
+              <label class="os-field">
+                <span>架构</span>
+                <select id="archSelect" aria-label="选择架构">
+                  <option value="x86_64">x86_64</option>
+                  <option value="aarch64">aarch64</option>
+                </select>
+              </label>
+            </div>
+            <div class="os-modal-actions">
+              <label class="os-filter-toggle">
+                <input type="checkbox" id="fitOnly" checked />
+                <span>侧栏仅显示当前系统相关源</span>
+              </label>
+              <button type="button" class="os-detect-btn" id="detectOsBtn">自动识别本机</button>
+            </div>
+            <div class="os-summary" id="osSummary"></div>
+            <div class="chip-row" id="recChips">
+              <span class="chip-title">一键打开适配源</span>
+            </div>
+            <div class="chip-row" id="recentChips" hidden>
+              <span class="chip-title">最近查看</span>
+            </div>
+            <div class="os-modal-foot">
+              <span class="os-modal-tip">快捷键 <kbd>Ctrl</kbd>+<kbd>K</kbd> 开关 · <kbd>Esc</kbd> 关闭</span>
+              <button type="button" class="os-modal-done" data-os-close>完成</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================ Conda ================ -->
+        <section class="source-panel active" id="panel-conda">
+          <h1>Conda 软件源</h1>
+          <p class="lead">路径：<code class="inline">soft_mirrors/conda/</code>。推荐写入完整 <code class="inline">~/.condarc</code>（default_channels + custom_channels），与站内标准格式一致。</p>
+
+          <div class="callout tip">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>推荐做法</strong>
+              <p>第三方 channel（conda-forge / bioconda / pytorch）写入 <code class="inline">custom_channels</code>，值为云根 <code class="inline">.../conda/cloud</code>（不要带 channel 名后缀）。请使用下方生成的配置，勿手工拼完整 URL。</p>
+            </div>
+          </div>
+
+          <h2><span class="h-num">1</span>写入标准 ~/.condarc（推荐）</h2>
+
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="condaCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="condaCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>临时使用单个 Channel</h2>
+
+          <div class="channel-row">
+            <span class="channel-label">软件源</span>
+            <select id="condaChannel" aria-label="选择 Conda channel"></select>
+          </div>
+
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="condaTemp">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="condaTemp"></code>
+          </div>
+
+          <h2><span class="h-num">3</span>Channel 地址</h2>
+
+          <div class="url-box">
+            <div class="url-label">URL</div>
+            <div class="url-value"><code id="condaUrl"></code></div>
+            <button type="button" class="url-copy" data-copy-target="condaUrl">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+          </div>
+
+          <h2><span class="h-num">4</span>Miniconda 安装器</h2>
+
+          <div class="url-box">
+            <div class="url-label">安装脚本</div>
+            <div class="url-value"><code id="condaMiniconda"></code></div>
+            <button type="button" class="url-copy" data-copy-target="condaMiniconda">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+          </div>
+
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="condaSed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="condaSed"></code>
+          </div>
+
+          <h2><span class="h-num">5</span>配置验证</h2>
+
+          <div class="callout success">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <path d="M22 4L12 14.01l-3-3"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>检查配置</strong>
+              <p>执行 <code class="inline">conda config --show channels</code> 与 <code class="inline">conda config --show default_channels</code>，确认 URL 指向 <code class="inline">mirrors.tibhpc.net</code>。</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================ PyPI ================ -->
+        <section class="source-panel" id="panel-pypi">
+          <h1>PyPI 软件源（pip）</h1>
+          <p class="lead">路径：<code class="inline">soft_mirrors/pypi/web/simple/</code>。兼容 PEP 503 simple 索引，一条命令切换 pip 默认源。</p>
+
+          <div class="callout tip">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>推荐做法</strong>
+              <p>使用 <code class="inline">pip config</code> 命令配置，无需手动创建或修改 <code class="inline">pip.conf</code>。</p>
+            </div>
+          </div>
+
+          <h2><span class="h-num">1</span>执行配置命令</h2>
+
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="pypiCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="pypiCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+
+          <div class="url-box">
+            <div class="url-label">Simple Index</div>
+            <div class="url-value"><code id="pypiUrl"></code></div>
+            <button type="button" class="url-copy" data-copy-target="pypiUrl">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+          </div>
+
+          <h2><span class="h-num">3</span>配置验证</h2>
+
+          <div class="callout success">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <path d="M22 4L12 14.01l-3-3"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>检查配置</strong>
+              <p>执行以下命令查看当前 pip 配置：<code class="inline">pip config list</code></p>
+            </div>
+          </div>
+
+          <div class="fold-item">
+            <div class="fold-q" data-fold>写入完整 pip.conf</div>
+            <div class="fold-a">
+              <div class="fold-a-inner">
+                <p>与站内文档标准格式一致，写入 <code class="inline">~/.config/pip/pip.conf</code>：</p>
+                <div class="code-block">
+                  <span class="lang">Linux / macOS</span>
+                  <button type="button" class="copy-btn" data-copy-target="pypiSed">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    复制
+                  </button>
+                  <code id="pypiSed"></code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================ Go ================ -->
+        <section class="source-panel" id="panel-go">
+          <h1>Go 软件源</h1>
+          <p class="lead">路径：<code class="inline">soft_mirrors/golang/</code>。提供 Go 官方发行版二进制包下载。</p>
+
+          <div class="callout info">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>适用版本</strong>
+              <p>请到镜像目录选择所需版本的 <code class="inline">go*.linux-amd64.tar.gz</code> 安装；模块下载仍走官方 GOPROXY 或自行配置代理。</p>
+            </div>
+          </div>
+
+          <h2><span class="h-num">1</span>下载并安装（示例）</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="goCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="goCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">镜像目录</div>
+            <div class="url-value" id="goUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>版本列表</h2>
+          <div class="url-box">
+            <div class="url-label">查看可用版本</div>
+            <div class="url-value" id="goVersionUrl"></div>
+          </div>
+
+          <h2><span class="h-num">4</span>持久化配置（写入 ~/.bashrc）</h2>
+          <div class="code-block">
+            <span class="lang">Shell</span>
+            <button type="button" class="copy-btn" data-copy-target="goSed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="goSed"></code>
+          </div>
+        </section>
+
+        <!-- ================ Rust (rustup) ================ -->
+        <section class="source-panel" id="panel-rust">
+          <h1>Rust 软件源</h1>
+          <p class="lead">路径：<code class="inline">soft_mirrors/rust/</code>（工具链）与 <code class="inline">soft_mirrors/rust/rustup/</code>（rustup 根）。</p>
+
+          <div class="callout warning">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>需要 Curl</strong>
+              <p>安装前请确保系统中已安装 curl（<code class="inline">sudo apt install curl</code>）。</p>
+            </div>
+          </div>
+
+          <h2><span class="h-num">1</span>安装命令</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="rustCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="rustCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">rustup 镜像</div>
+            <div class="url-value" id="rustUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>持久化配置（写入 ~/.bashrc）</h2>
+          <div class="code-block">
+            <span class="lang">Shell</span>
+            <button type="button" class="copy-btn" data-copy-target="rustSed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="rustSed"></code>
+          </div>
+        </section>
+
+        <!-- ================ Ubuntu APT ================ -->
+        <section class="source-panel" id="panel-ubuntu">
+          <h1>Ubuntu APT 软件源</h1>
+          <p class="lead">路径：<code class="inline">os_mirrors/ubuntu/</code>。用本站地址替换官方 archive/security 源。</p>
+
+          <div class="callout warning">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>操作不可逆</strong>
+              <p>替换软件源后请勿同时使用多个镜像，以免产生冲突。</p>
+            </div>
+          </div>
+
+          <h2><span class="h-num">1</span>一键替换</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="ubuntuCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="ubuntuCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">APT 镜像目录</div>
+            <div class="url-value" id="ubuntuUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>apt sources.list 格式配置（备份后执行）</h2>
+          <div class="code-block">
+            <span class="lang">Shell</span>
+            <button type="button" class="copy-btn" data-copy-target="ubuntuSed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="ubuntuSed"></code>
+          </div>
+        </section>
+
+        <!-- ================ Debian ================ -->
+        <section class="source-panel" id="panel-debian">
+          <h1>Debian 软件源</h1>
+          <p class="lead">路径：<code class="inline">os_mirrors/cd-images/debian-releases/</code>。deb 路径为 <code class="inline">.../debian</code>。</p>
+
+          <div class="callout warning">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>操作不可逆</strong>
+              <p>替换软件源后请勿同时使用多个镜像，以免产生冲突。</p>
+            </div>
+          </div>
+
+          <h2><span class="h-num">1</span>一键替换</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="debianCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="debianCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">镜像目录</div>
+            <div class="url-value" id="debianUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>apt sources.list 格式配置（备份后执行）</h2>
+          <div class="code-block">
+            <span class="lang">Shell</span>
+            <button type="button" class="copy-btn" data-copy-target="debianSed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="debianSed"></code>
+          </div>
+        </section>
+
+        <!-- ================ CentOS Stream ================ -->
+        <section class="source-panel" id="panel-centos-stream">
+          <h1>CentOS Stream 软件源</h1>
+          <p class="lead">路径：<code class="inline">os_mirrors/centos-stream/</code>，版本目录为 <code class="inline">9-stream/</code>、<code class="inline">10-stream/</code>。</p>
+
+          <h2><span class="h-num">1</span>一键替换</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="centosCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="centosCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">镜像目录</div>
+            <div class="url-value" id="centosUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>repo 配置文件（备份后执行）</h2>
+          <div class="code-block">
+            <span class="lang">Shell</span>
+            <button type="button" class="copy-btn" data-copy-target="centosSed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="centosSed"></code>
+          </div>
+        </section>
+
+        <!-- ================ Rocky Linux ================ -->
+        <section class="source-panel" id="panel-rocky">
+          <h1>Rocky Linux 软件源</h1>
+          <p class="lead">路径：<code class="inline">os_mirrors/cd-images/rocky-releases/</code>。配置前请先核对版本子目录布局。</p>
+
+          <h2><span class="h-num">1</span>一键替换</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="rockyCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="rockyCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">镜像目录</div>
+            <div class="url-value" id="rockyUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>rocky.conf 配置文件（备份后执行）</h2>
+          <div class="code-block">
+            <span class="lang">Shell</span>
+            <button type="button" class="copy-btn" data-copy-target="rockySed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="rockySed"></code>
+          </div>
+        </section>
+
+        <!-- ================ AlmaLinux ================ -->
+        <section class="source-panel" id="panel-almalinux">
+          <h1>AlmaLinux 软件源</h1>
+          <p class="lead">路径：<code class="inline">os_mirrors/cd-images/almalinux/</code>。常见布局如 <code class="inline">9/BaseOS/$basearch/os/</code>。</p>
+
+          <h2><span class="h-num">1</span>一键替换</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="almaCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="almaCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">镜像目录</div>
+            <div class="url-value" id="almaUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>almalinux.repo 配置文件（备份后执行）</h2>
+          <div class="code-block">
+            <span class="lang">Shell</span>
+            <button type="button" class="copy-btn" data-copy-target="almaSed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="almaSed"></code>
+          </div>
+        </section>
+
+        <!-- ================ Fedora ================ -->
+        <section class="source-panel" id="panel-fedora">
+          <h1>Fedora 软件源</h1>
+          <p class="lead">路径：<code class="inline">os_mirrors/cd-images/fedora/</code>。请对照 releases/、updates/ 目录配置。</p>
+
+          <h2><span class="h-num">1</span>一键替换</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="fedoraCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="fedoraCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">镜像目录</div>
+            <div class="url-value" id="fedoraUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>fedora.repo 配置文件（备份后执行）</h2>
+          <div class="code-block">
+            <span class="lang">Shell</span>
+            <button type="button" class="copy-btn" data-copy-target="fedoraSed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="fedoraSed"></code>
+          </div>
+        </section>
+
+        <!-- ================ RHEL ================ -->
+        <section class="source-panel" id="panel-rhel">
+          <h1>RHEL 软件源</h1>
+          <p class="lead">路径：<code class="inline">os_mirrors/rhel/</code>。按顶部所选小版本生成目录。</p>
+          <h2><span class="h-num">1</span>配置命令</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="rhelCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="rhelCommand"></code>
+          </div>
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">镜像目录</div>
+            <div class="url-value" id="rhelUrl"></div>
+          </div>
+          <h2><span class="h-num">3</span>补充说明</h2>
+          <div class="code-block">
+            <span class="lang">Shell</span>
+            <button type="button" class="copy-btn" data-copy-target="rhelSed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="rhelSed"></code>
+          </div>
+        </section>
+
+        <!-- ================ openEuler ================ -->
+        <section class="source-panel" id="panel-openeuler">
+          <h1>openEuler 软件源</h1>
+          <p class="lead">路径：<code class="inline">os_mirrors/cd-images/openEuler/</code>。</p>
+          <h2><span class="h-num">1</span>配置命令</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="openeulerCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="openeulerCommand"></code>
+          </div>
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">镜像目录</div>
+            <div class="url-value" id="openeulerUrl"></div>
+          </div>
+          <h2><span class="h-num">3</span>补充说明</h2>
+          <div class="code-block">
+            <span class="lang">Shell</span>
+            <button type="button" class="copy-btn" data-copy-target="openeulerSed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="openeulerSed"></code>
+          </div>
+        </section>
+
+        <!-- ================ openSUSE ================ -->
+        <section class="source-panel" id="panel-opensuse">
+          <h1>openSUSE 软件源</h1>
+          <p class="lead">路径：<code class="inline">os_mirrors/cd-images/openSUSE/distribution/leap/</code>。</p>
+          <h2><span class="h-num">1</span>配置命令</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="opensuseCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="opensuseCommand"></code>
+          </div>
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">镜像目录</div>
+            <div class="url-value" id="opensuseUrl"></div>
+          </div>
+          <h2><span class="h-num">3</span>补充说明</h2>
+          <div class="code-block">
+            <span class="lang">Shell</span>
+            <button type="button" class="copy-btn" data-copy-target="opensuseSed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="opensuseSed"></code>
+          </div>
+        </section>
+
+        <!-- ================ EPEL ================ -->
+        <section class="source-panel" id="panel-epel">
+          <h1>EPEL 软件源</h1>
+          <p class="lead">路径：<code class="inline">os_mirrors/epel/</code>，按大版本分目录（7/ 8/ 9/ 10/）。</p>
+
+          <div class="callout info">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>需要 EPEL 基础包</strong>
+              <p>首次使用请先安装 epel-release，再替换为镜像源：<code class="inline">sudo dnf install -y epel-release</code></p>
+            </div>
+          </div>
+
+          <h2><span class="h-num">1</span>一键替换（sed 批量替换）</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="epelCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="epelCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">EPEL 镜像</div>
+            <div class="url-value" id="epelUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>手动配置文件（以 EPEL 9 为例，备份后执行）</h2>
+          <div class="code-block">
+            <span class="lang">Shell</span>
+            <button type="button" class="copy-btn" data-copy-target="epelSed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="epelSed"></code>
+          </div>
+        </section>
+
+        <!-- ================ Docker CE ================ -->
+        <section class="source-panel" id="panel-docker">
+          <h1>Docker CE 软件源</h1>
+          <p class="lead">路径：<code class="inline">soft_mirrors/docker-ce/</code>。repo 文件在 <code class="inline">linux/&lt;distro&gt;/docker-ce.repo</code>，需把官方 download.docker.com 替换为本站。</p>
+
+          <div class="callout tip">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>适用系统</strong>
+              <p>示例按 CentOS 写；Debian/RHEL/Rocky/Alma 请改用 <code class="inline">linux/&lt;distro&gt;/docker-ce.repo</code>，再 sed 替换官方域名。</p>
+            </div>
+          </div>
+
+          <h2><span class="h-num">1</span>一键安装 Docker</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="dockerInstall">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="dockerInstall"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">Docker 镜像</div>
+            <div class="url-value" id="dockerUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>各发行版仓库路径</h2>
+          <div class="code-block">
+            <span class="lang">Note</span>
+            <button type="button" class="copy-btn" data-copy-target="dockerSed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="dockerSed"></code>
+          </div>
+        </section>
+
+        <!-- ================ Kubernetes ================ -->
+        <section class="source-panel" id="panel-kubernetes">
+          <h1>Kubernetes 软件源</h1>
+          <p class="lead">路径：<code class="inline">soft_mirrors/kubernetes/</code>，pkgs.k8s.io 风格（目录名含冒号）。Debian/Ubuntu 用 <code class="inline">.../deb/</code>，RHEL 系用 <code class="inline">.../rpm/</code>；命令随顶部系统切换。</p>
+
+          <div class="callout warning">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>注意版本兼容性</strong>
+              <p>请确保 kubeadm、kubelet、kubectl 版本一致；仓库路径含冒号，复制时勿改坏目录名。</p>
+            </div>
+          </div>
+
+          <h2><span class="h-num">1</span>配置 yum 仓库并安装（示例 v1.33）</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="k8sCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="k8sCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">Kubernetes 镜像</div>
+            <div class="url-value" id="k8sUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>查看可用版本</h2>
+          <div class="url-box">
+            <div class="url-label">版本列表</div>
+            <div class="url-value" id="k8sVersionUrl"></div>
+          </div>
+        </section>
+
+        <!-- ================ Apptainer ================ -->
+        <section class="source-panel" id="panel-apptainer">
+          <h1>Apptainer 软件源</h1>
+          <p class="lead">路径：<code class="inline">soft_mirrors/apptainer/</code>。提供 rpm/deb 安装包（非源码编译流程）。</p>
+
+          <h2><span class="h-num">1</span>一键安装</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="apptainerCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="apptainerCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">Apptainer 镜像</div>
+            <div class="url-value" id="apptainerUrl"></div>
+          </div>
+        </section>
+
+        <!-- ================ MySQL ================ -->
+        <section class="source-panel" id="panel-mysql">
+          <h1>MySQL 软件源</h1>
+          <p class="lead">RHEL 系：<code class="inline">soft_mirrors/mysql/yum/</code>（如 <code class="inline">mysql-8.0-community-el9-x86_64</code>）。Debian/Ubuntu：<code class="inline">soft_mirrors/mysql/apt/&lt;ubuntu|debian&gt;/</code>。命令随顶部系统切换。</p>
+
+          <h2><span class="h-num">1</span>一键安装 MySQL</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="mysqlCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="mysqlCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">MySQL 镜像</div>
+            <div class="url-value" id="mysqlUrl"></div>
+          </div>
+        </section>
+
+        <!-- ================ MongoDB ================ -->
+        <section class="source-panel" id="panel-mongodb">
+          <h1>MongoDB 软件源</h1>
+          <p class="lead">RHEL 系：<code class="inline">soft_mirrors/mongodb/yum/el&lt;N&gt;-8.0/</code>。Debian/Ubuntu：<code class="inline">soft_mirrors/mongodb/apt/&lt;ubuntu|debian&gt;/dists/&lt;codename&gt;/mongodb-org/8.0/</code>。命令随顶部系统切换。</p>
+
+          <h2><span class="h-num">1</span>一键安装 MongoDB</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="mongodbCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="mongodbCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">MongoDB 镜像</div>
+            <div class="url-value" id="mongodbUrl"></div>
+          </div>
+        </section>
+
+        <!-- ================ Python ================ -->
+        <section class="source-panel" id="panel-python">
+          <h1>Python 软件源</h1>
+          <p class="lead">路径：<code class="inline">soft_mirrors/python/&lt;版本&gt;/</code>。源码包为 <code class="inline">Python-x.y.z.tgz</code>；第三方包请走 PyPI 镜像。</p>
+
+          <h2><span class="h-num">1</span>下载 Python 源码包</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="pythonCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="pythonCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">Python 镜像</div>
+            <div class="url-value" id="pythonUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>查看可用版本</h2>
+          <div class="url-box">
+            <div class="url-label">版本列表</div>
+            <div class="url-value" id="pythonVersionUrl"></div>
+          </div>
+        </section>
+
+        <!-- ================ Julia ================ -->
+        <section class="source-panel" id="panel-julia">
+          <h1>Julia 软件源</h1>
+          <p class="lead">路径：<code class="inline">soft_mirrors/julia/bin/</code>。Linux x86_64 见 <code class="inline">bin/linux/x64/</code> 目录。</p>
+
+          <h2><span class="h-num">1</span>下载 Julia</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="juliaCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="juliaCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">Julia 镜像</div>
+            <div class="url-value" id="juliaUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>查看可用版本</h2>
+          <div class="url-box">
+            <div class="url-label">版本列表</div>
+            <div class="url-value" id="juliaVersionUrl"></div>
+          </div>
+        </section>
+
+        <!-- ================ Node.js ================ -->
+        <section class="source-panel" id="panel-nodejs">
+          <h1>Node.js 软件源</h1>
+          <p class="lead">路径：<code class="inline">soft_mirrors/nodejs-release/</code>。提供官方发行版索引；npm registry 请另行配置。</p>
+
+          <h2><span class="h-num">1</span>下载 Node.js</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="nodejsCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="nodejsCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">Node.js 镜像</div>
+            <div class="url-value" id="nodejsUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>查看可用版本</h2>
+          <div class="url-box">
+            <div class="url-label">版本列表</div>
+            <div class="url-value" id="nodejsVersionUrl"></div>
+          </div>
+        </section>
+
+        <!-- ================ Spack ================ -->
+        <section class="source-panel" id="panel-spack">
+          <h1>Spack 软件源</h1>
+          <p class="lead">路径：<code class="inline">soft_mirrors/spack/</code>。提供源码包下载；非 Git 仓库镜像。</p>
+
+          <h2><span class="h-num">1</span>下载并解压 Spack 源码包</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="spackCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="spackCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">Spack 镜像</div>
+            <div class="url-value" id="spackUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>配置镜像源</h2>
+          <div class="code-block">
+            <span class="lang">Shell</span>
+            <button type="button" class="copy-btn" data-copy-target="spackSed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="spackSed"></code>
+          </div>
+        </section>
+
+        <!-- ================ NVIDIA/CUDA ================ -->
+        <section class="source-panel" id="panel-nvidia">
+          <h1>NVIDIA/CUDA 软件源</h1>
+          <p class="lead">路径：<code class="inline">soft_mirrors/NVIDIA/</code>，按发行版分目录（rhel9/ debian12/ fedora40/ …）。</p>
+
+          <div class="callout warning">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>适用场景</strong>
+              <p>按本机发行版选择目录（如 rhel9/x86_64），再安装 cuda-toolkit 等包。需已有 NVIDIA GPU 驱动环境。</p>
+            </div>
+          </div>
+
+          <h2><span class="h-num">1</span>配置 CUDA 软件源</h2>
+          <div class="code-block">
+            <span class="lang">Terminal</span>
+            <button type="button" class="copy-btn" data-copy-target="nvidiaCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="nvidiaCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">CUDA 镜像</div>
+            <div class="url-value" id="nvidiaUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>查看可用版本</h2>
+          <div class="url-box">
+            <div class="url-label">版本目录</div>
+            <div class="url-value" id="nvidiaVersionUrl"></div>
+          </div>
+        </section>
+
+        <!-- ================ CRAN ================ -->
+        <section class="source-panel" id="panel-cran">
+          <h1>CRAN 软件源</h1>
+          <p class="lead">路径：<code class="inline">soft_mirrors/CRAN/</code>。在 R 中设置 <code class="inline">options(repos = c(CRAN = ...))</code>。</p>
+
+          <h2><span class="h-num">1</span>配置 R 软件源</h2>
+          <div class="code-block">
+            <span class="lang">R</span>
+            <button type="button" class="copy-btn" data-copy-target="cranCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="cranCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">CRAN 镜像</div>
+            <div class="url-value" id="cranUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>持久化配置（写入 Rprofile）</h2>
+          <div class="code-block">
+            <span class="lang">R</span>
+            <button type="button" class="copy-btn" data-copy-target="cranSed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="cranSed"></code>
+          </div>
+        </section>
+
+        <!-- ================ Bioconductor ================ -->
+        <section class="source-panel" id="panel-bioconductor">
+          <h1>Bioconductor 软件源</h1>
+          <p class="lead">路径：<code class="inline">soft_mirrors/bioconductor/</code>。设置 <code class="inline">options(BioC_mirror = ...)</code>，建议同时把 CRAN 指到本站。</p>
+
+          <h2><span class="h-num">1</span>配置 Bioconductor 软件源</h2>
+          <div class="code-block">
+            <span class="lang">R</span>
+            <button type="button" class="copy-btn" data-copy-target="biocCommand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="biocCommand"></code>
+          </div>
+
+          <h2><span class="h-num">2</span>软件源地址</h2>
+          <div class="url-box">
+            <div class="url-label">Bioconductor 镜像</div>
+            <div class="url-value" id="biocUrl"></div>
+          </div>
+
+          <h2><span class="h-num">3</span>安装 Bioconductor 基本包</h2>
+          <div class="code-block">
+            <span class="lang">R</span>
+            <button type="button" class="copy-btn" data-copy-target="biocInstall">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              复制
+            </button>
+            <code id="biocInstall"></code>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <div class="doc-footer">
+      <p>© 2026 中国科学院天津工业生物技术研究所 · 数据镜像站 · 软件源配置</p>
+      <p class="footer-tech">由 HPC 提供技术支持</p>
+    </div>
+  </div>
+
+  <script>
+    /* 软件源配置：URL = 当前站点 origin + 相对路径（内网/测试域名也可直接复制使用） */
+    var ORIGIN = (typeof location !== "undefined" && location.origin)
+      ? location.origin
+      : "https://mirrors.tibhpc.net";
+    function mirrorUrl(rel) {
+      return ORIGIN + "/" + String(rel || "").replace(/^\/+/, "");
+    }
+
+    var SOFT = {
+      conda: "soft_mirrors/conda/",
+      pypi: "soft_mirrors/pypi/web/simple/",
+      golang: "soft_mirrors/golang/",
+      rust: "soft_mirrors/rust/",
+      docker: "soft_mirrors/docker-ce/",
+      k8s: "soft_mirrors/kubernetes/",
+      apptainer: "soft_mirrors/apptainer/",
+      mysql: "soft_mirrors/mysql/",
+      mongodb: "soft_mirrors/mongodb/",
+      python: "soft_mirrors/python/",
+      julia: "soft_mirrors/julia/",
+      nodejs: "soft_mirrors/nodejs-release/",
+      spack: "soft_mirrors/spack/",
+      nvidia: "soft_mirrors/NVIDIA/",
+      cran: "soft_mirrors/CRAN/",
+      bioc: "soft_mirrors/bioconductor/"
+    };
+
+    var OS = {
+      ubuntu: "os_mirrors/ubuntu/",
+      debian: "os_mirrors/cd-images/debian-releases/",
+      centos: "os_mirrors/centos-stream/",
+      rocky: "os_mirrors/cd-images/rocky-releases/",
+      alma: "os_mirrors/cd-images/almalinux/",
+      fedora: "os_mirrors/cd-images/fedora/",
+      epel: "os_mirrors/epel/"
+    };
+
+    var CONDA_CLOUD = mirrorUrl("soft_mirrors/conda/cloud");
+    var CONDA_CHANNELS = [
+      { key: "main",        name: "main",         url: mirrorUrl("soft_mirrors/conda/pkgs/main/") },
+      { key: "free",        name: "free",         url: mirrorUrl("soft_mirrors/conda/pkgs/free/") },
+      { key: "r",           name: "r",            url: mirrorUrl("soft_mirrors/conda/pkgs/r/") },
+      { key: "msys2",       name: "msys2",        url: mirrorUrl("soft_mirrors/conda/pkgs/msys2/") },
+      { key: "conda-forge", name: "conda-forge",  url: mirrorUrl("soft_mirrors/conda/cloud/conda-forge/") },
+      { key: "bioconda",    name: "bioconda",     url: mirrorUrl("soft_mirrors/conda/cloud/bioconda/") },
+      { key: "pytorch",     name: "pytorch",      url: mirrorUrl("soft_mirrors/conda/cloud/pytorch/") }
+    ];
+
+
+
+    /* ---------- 操作系统目录 ---------- */
+    var OS_CATALOG = [
+      {
+        id: "rhel", label: "RHEL", family: "rhel", panel: "rhel", docker: "rhel",
+        versions: [
+          { v: "8.6", el: "8", nvidia: "rhel8" },
+          { v: "8.8", el: "8", nvidia: "rhel8" },
+          { v: "9.3", el: "9", nvidia: "rhel9" },
+          { v: "9.4", el: "9", nvidia: "rhel9" },
+          { v: "9.5", el: "9", nvidia: "rhel9" },
+          { v: "9.6", el: "9", nvidia: "rhel9" }
+        ],
+        osRel: function(ver) { return "os_mirrors/rhel/" + ver.v + "/"; }
+      },
+      {
+        id: "rocky", label: "Rocky Linux", family: "rhel", panel: "rocky", docker: "rocky",
+        versions: [
+          { v: "8", el: "8", nvidia: "rhel8", repo: "8" },
+          { v: "8.4", el: "8", nvidia: "rhel8", repo: "8" },
+          { v: "8.5", el: "8", nvidia: "rhel8", repo: "8" },
+          { v: "8.6", el: "8", nvidia: "rhel8", repo: "8" },
+          { v: "8.7", el: "8", nvidia: "rhel8", repo: "8" },
+          { v: "8.8", el: "8", nvidia: "rhel8", repo: "8" },
+          { v: "8.9", el: "8", nvidia: "rhel8", repo: "8" },
+          { v: "8.10", el: "8", nvidia: "rhel8", repo: "8.10" },
+          { v: "9", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.0", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.1", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.2", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.3", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.4", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.5", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.6", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.7", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.8", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "10", el: "10", nvidia: "rhel10", repo: "10" },
+          { v: "10.0", el: "10", nvidia: "rhel10", repo: "10" },
+          { v: "10.1", el: "10", nvidia: "rhel10", repo: "10" },
+          { v: "10.2", el: "10", nvidia: "rhel10", repo: "10" }
+        ],
+        osRel: function(ver) { return "os_mirrors/cd-images/rocky-releases/" + (ver.repo || ver.v) + "/"; }
+      },
+      {
+        id: "almalinux", label: "AlmaLinux", family: "rhel", panel: "almalinux", docker: "alma",
+        versions: [
+          { v: "8", el: "8", nvidia: "rhel8", repo: "8" },
+          { v: "8.3", el: "8", nvidia: "rhel8", repo: "8" },
+          { v: "8.4", el: "8", nvidia: "rhel8", repo: "8" },
+          { v: "8.5", el: "8", nvidia: "rhel8", repo: "8" },
+          { v: "8.6", el: "8", nvidia: "rhel8", repo: "8" },
+          { v: "8.7", el: "8", nvidia: "rhel8", repo: "8" },
+          { v: "8.8", el: "8", nvidia: "rhel8", repo: "8" },
+          { v: "8.9", el: "8", nvidia: "rhel8", repo: "8" },
+          { v: "8.10", el: "8", nvidia: "rhel8", repo: "8.10" },
+          { v: "9", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.0", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.1", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.2", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.3", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.4", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.5", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.6", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.7", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "9.8", el: "9", nvidia: "rhel9", repo: "9" },
+          { v: "10", el: "10", nvidia: "rhel10", repo: "10" },
+          { v: "10.0", el: "10", nvidia: "rhel10", repo: "10" },
+          { v: "10.1", el: "10", nvidia: "rhel10", repo: "10" },
+          { v: "10.2", el: "10", nvidia: "rhel10", repo: "10" }
+        ],
+        osRel: function(ver) { return "os_mirrors/cd-images/almalinux/" + (ver.repo || ver.v) + "/"; }
+      },
+      {
+        id: "centos-stream", label: "CentOS Stream", family: "rhel", panel: "centos-stream", docker: "centos",
+        versions: [
+          { v: "9", el: "9", nvidia: "rhel9", stream: "9-stream" },
+          { v: "10", el: "10", nvidia: "rhel10", stream: "10-stream" }
+        ],
+        osRel: function(ver) { return "os_mirrors/centos-stream/" + ver.stream + "/"; }
+      },
+      {
+        id: "ubuntu", label: "Ubuntu", family: "debian", panel: "ubuntu", docker: "ubuntu",
+        versions: [
+          { v: "16.04", codename: "xenial", nvidia: "ubuntu1604" },
+          { v: "18.04", codename: "bionic", nvidia: "ubuntu1804" },
+          { v: "20.04", codename: "focal", nvidia: "ubuntu2004" },
+          { v: "22.04", codename: "jammy", nvidia: "ubuntu2204" },
+          { v: "24.04", codename: "noble", nvidia: "ubuntu2404" },
+          { v: "25.04", codename: "plucky", nvidia: "ubuntu2404" },
+          { v: "25.10", codename: "questing", nvidia: "ubuntu2604" },
+          { v: "26.04", codename: "resolute", nvidia: "ubuntu2604" }
+        ],
+        osRel: function() { return "os_mirrors/ubuntu/"; }
+      },
+      {
+        id: "debian", label: "Debian", family: "debian", panel: "debian", docker: "debian",
+        versions: [
+          { v: "10", codename: "buster", nvidia: "debian10" },
+          { v: "11", codename: "bullseye", nvidia: "debian11" },
+          { v: "12", codename: "bookworm", nvidia: "debian12" },
+          { v: "13", codename: "trixie", nvidia: "debian13" }
+        ],
+        osRel: function() { return "os_mirrors/cd-images/debian-releases/"; }
+      },
+      {
+        id: "fedora", label: "Fedora", family: "fedora", panel: "fedora", docker: "fedora",
+        versions: [
+          { v: "38", el: "38", nvidia: "fedora39" },
+          { v: "39", el: "39", nvidia: "fedora39" },
+          { v: "40", el: "40", nvidia: "fedora40" },
+          { v: "41", el: "41", nvidia: "fedora41" },
+          { v: "42", el: "42", nvidia: "fedora42" },
+          { v: "43", el: "43", nvidia: "fedora43" },
+          { v: "44", el: "44", nvidia: "fedora44" }
+        ],
+        osRel: function() { return "os_mirrors/cd-images/fedora/"; }
+      },
+      {
+        id: "openeuler", label: "openEuler", family: "rhel", panel: "openeuler", docker: "centos",
+        versions: [
+          { v: "20.03-LTS", el: "8", nvidia: "rhel8", dir: "openEuler-20.03-LTS" },
+          { v: "20.03-LTS-SP1", el: "8", nvidia: "rhel8", dir: "openEuler-20.03-LTS-SP1" },
+          { v: "20.03-LTS-SP2", el: "8", nvidia: "rhel8", dir: "openEuler-20.03-LTS-SP2" },
+          { v: "20.03-LTS-SP3", el: "8", nvidia: "rhel8", dir: "openEuler-20.03-LTS-SP3" },
+          { v: "20.03-LTS-SP4", el: "8", nvidia: "rhel8", dir: "openEuler-20.03-LTS-SP4" },
+          { v: "22.03-LTS", el: "9", nvidia: "rhel9", dir: "openEuler-22.03-LTS" },
+          { v: "22.03-LTS-SP1", el: "9", nvidia: "rhel9", dir: "openEuler-22.03-LTS-SP1" },
+          { v: "22.03-LTS-SP2", el: "9", nvidia: "rhel9", dir: "openEuler-22.03-LTS-SP2" },
+          { v: "22.03-LTS-SP3", el: "9", nvidia: "rhel9", dir: "openEuler-22.03-LTS-SP3" },
+          { v: "22.03-LTS-SP4", el: "9", nvidia: "rhel9", dir: "openEuler-22.03-LTS-SP4" },
+          { v: "24.03-LTS", el: "9", nvidia: "rhel9", dir: "openEuler-24.03-LTS" },
+          { v: "24.03-LTS-SP1", el: "9", nvidia: "rhel9", dir: "openEuler-24.03-LTS-SP1" },
+          { v: "24.03-LTS-SP2", el: "9", nvidia: "rhel9", dir: "openEuler-24.03-LTS-SP2" },
+          { v: "24.03-LTS-SP3", el: "9", nvidia: "rhel9", dir: "openEuler-24.03-LTS-SP3" },
+          { v: "24.03-LTS-SP4", el: "9", nvidia: "rhel9", dir: "openEuler-24.03-LTS-SP4" }
+        ],
+        osRel: function(ver) { return "os_mirrors/cd-images/openEuler/" + ver.dir + "/"; }
+      },
+      {
+        id: "opensuse", label: "openSUSE Leap", family: "suse", panel: "opensuse", docker: "centos",
+        versions: [
+          { v: "15.1", el: "15", nvidia: "rhel8" },
+          { v: "15.3", el: "15", nvidia: "rhel8" },
+          { v: "15.5", el: "15", nvidia: "rhel8" },
+          { v: "15.6", el: "15", nvidia: "rhel8" },
+          { v: "16.0", el: "16", nvidia: "rhel9" },
+          { v: "16.1", el: "16", nvidia: "rhel9" }
+        ],
+        osRel: function(ver) { return "os_mirrors/cd-images/openSUSE/distribution/leap/" + ver.v + "/"; }
+      }
+    ];
+
+    // 修正 Alma 9.8 el 笔误
+    OS_CATALOG.forEach(function(os) {
+      if (os.id !== "almalinux") return;
+      os.versions.forEach(function(ver) {
+        if (ver.v === "9.8") ver.el = "9";
+      });
+    });
+
+    var TARGET = null;
+    var RECENT_KEY = "soft_recent_sources_v1";
+    var OS_PREF_KEY = "soft_os_target_v2";
+
+    function findOs(id) {
+      for (var i = 0; i < OS_CATALOG.length; i++) if (OS_CATALOG[i].id === id) return OS_CATALOG[i];
+      return OS_CATALOG[0];
+    }
+    function findVer(os, v) {
+      for (var i = 0; i < os.versions.length; i++) if (os.versions[i].v === v) return os.versions[i];
+      return os.versions[os.versions.length - 1];
+    }
+    function buildTarget(osId, verStr, arch) {
+      var os = findOs(osId);
+      var ver = findVer(os, verStr);
+      var el = ver.el || String(ver.v).split(".")[0];
+      var goArch = arch === "aarch64" ? "arm64" : "amd64";
+      var nodeArch = arch === "aarch64" ? "arm64" : "x64";
+      var rustTarget = arch === "aarch64" ? "aarch64-unknown-linux-gnu" : "x86_64-unknown-linux-gnu";
+      var miniconda = arch === "aarch64"
+        ? "Miniconda3-latest-Linux-aarch64.sh"
+        : "Miniconda3-latest-Linux-x86_64.sh";
+      var family = os.family;
+      var prefer = ["conda", "pypi"];
+      if (family === "debian") prefer = prefer.concat([os.panel || "ubuntu", "docker", "nodejs", "nvidia"]);
+      else if (family === "fedora") prefer = prefer.concat(["fedora", "docker", "nvidia"]);
+      else if (family === "suse") prefer = prefer.concat(["opensuse", "docker", "nvidia"]);
+      else prefer = prefer.concat([os.panel || "rocky", "epel", "docker", "apptainer", "nvidia", "mysql"]);
+      return {
+        osId: os.id,
+        label: os.label,
+        version: ver.v,
+        el: String(el),
+        family: family,
+        panel: os.panel,
+        codename: ver.codename || null,
+        stream: ver.stream || null,
+        arch: arch,
+        dockerDistro: os.docker,
+        dockerVer: ver.v,
+        nvidiaDir: ver.nvidia || (family === "debian" ? "debian12" : "rhel9"),
+        osRel: os.osRel(ver),
+        goArch: goArch,
+        nodeArch: nodeArch,
+        rustTarget: rustTarget,
+        miniconda: miniconda,
+        apptainerKind: family === "debian" ? "deb" : "rpm",
+        pkg: family === "debian" ? "apt" : "dnf",
+        prefer: prefer.filter(Boolean)
+      };
+    }
+
+    function saveTarget() {
+      try {
+        localStorage.setItem(OS_PREF_KEY, JSON.stringify({
+          osId: TARGET.osId, version: TARGET.version, arch: TARGET.arch
+        }));
+      } catch (_) {}
+    }
+    function loadSavedTarget() {
+      try {
+        var raw = JSON.parse(localStorage.getItem(OS_PREF_KEY) || "null");
+        if (!raw) return null;
+        return buildTarget(raw.osId, raw.version, raw.arch || "x86_64");
+      } catch (_) { return null; }
+    }
+
+    // 兼容旧变量名：部分渲染仍可能读 PROFILE
+    var PROFILE = null;
+    function syncProfileAlias() { PROFILE = TARGET; }
+
+    var PYPI_URL = mirrorUrl(SOFT.pypi);
+    var MINICONDA = "";
+
+    function refreshMiniconda() {
+      MINICONDA = mirrorUrl("soft_mirrors/conda/miniconda/" + TARGET.miniconda);
+    }
+
+    function toast(msg, ok) {
+      var host = document.getElementById("toastHost");
+      if (!host) return;
+      var el = document.createElement("div");
+      el.className = "toast" + (ok ? " ok" : "");
+      el.textContent = msg;
+      host.appendChild(el);
+      setTimeout(function() { el.remove(); }, 1800);
+    }
+    function getRecent() {
+      try { return JSON.parse(localStorage.getItem(RECENT_KEY) || "[]"); } catch (_) { return []; }
+    }
+    function pushRecent(name) {
+      if (!name) return;
+      var list = getRecent().filter(function(x) { return x !== name; });
+      list.unshift(name);
+      try { localStorage.setItem(RECENT_KEY, JSON.stringify(list.slice(0, 6))); } catch (_) {}
+      renderRecentChips();
+    }
+    function renderRecentChips() {
+      var wrap = document.getElementById("recentChips");
+      if (!wrap) return;
+      wrap.querySelectorAll("button.chip").forEach(function(b) { b.remove(); });
+      var list = getRecent();
+      if (!list.length) { wrap.hidden = true; return; }
+      wrap.hidden = false;
+      list.forEach(function(key) {
+        var a = document.querySelector('.nav a[data-source="' + key + '"]');
+        if (!a) return;
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "chip ghost";
+        btn.textContent = a.textContent.replace(/\s*荐\s*$/, "").replace(/\s+/g, " ").trim();
+        btn.addEventListener("click", function() {
+          if (typeof window.syncOsFromPanel === "function" && window.syncOsFromPanel(key, true)) return;
+          switchSource(key);
+        });
+        wrap.appendChild(btn);
+      });
+    }
+
+    function updateAdaptStrip() {
+      var el = document.getElementById("adaptCurrent");
+      if (!el || !TARGET) return;
+      el.textContent = "当前：" + TARGET.label + " " + TARGET.version + " · " + TARGET.arch;
+    }
+
+    function preferVersionFor(os) {
+      if (os.id === "ubuntu") return "22.04";
+      if (os.id === "debian") return "12";
+      if (os.id === "rocky" || os.id === "almalinux") return "9.4";
+      if (os.id === "rhel") return "8.8";
+      if (os.id === "centos-stream") return "9";
+      if (os.id === "fedora") return "40";
+      if (os.id === "openeuler") return "22.03-LTS-SP4";
+      if (os.id === "opensuse") return "15.6";
+      return null;
+    }
+
+    var FIT_PREF_KEY = "soft_os_fit_only_v1";
+
+    function loadFitOnly() {
+      try {
+        var v = localStorage.getItem(FIT_PREF_KEY);
+        if (v === null) return true;
+        return v === "1";
+      } catch (_) { return true; }
+    }
+    function saveFitOnly(on) {
+      try { localStorage.setItem(FIT_PREF_KEY, on ? "1" : "0"); } catch (_) {}
+    }
+
+    function detectOsGuess() {
+      var ua = (navigator.userAgent || "").toLowerCase();
+      var plat = (navigator.platform || "").toLowerCase();
+      var arch = (/aarch64|arm64|apple/.test(ua + plat) && !/x86_64|amd64|win64|wow64/.test(ua))
+        ? "aarch64" : "x86_64";
+      // browser UA rarely exposes exact Linux distro; use common defaults
+      if (/ubuntu/.test(ua)) return buildTarget("ubuntu", "22.04", arch);
+      if (/debian/.test(ua)) return buildTarget("debian", "12", arch);
+      if (/fedora/.test(ua)) return buildTarget("fedora", "40", arch);
+      if (/centos/.test(ua)) return buildTarget("centos-stream", "9", arch);
+      if (/red ?hat|rhel/.test(ua)) return buildTarget("rhel", "8.8", arch);
+      if (/rocky/.test(ua)) return buildTarget("rocky", "9.4", arch);
+      if (/alma/.test(ua)) return buildTarget("almalinux", "9.4", arch);
+      if (/suse|opensuse/.test(ua)) return buildTarget("opensuse", "15.6", arch);
+      // generic Linux → Rocky 9.4（站内覆盖最全）
+      if (/linux/.test(ua) || /linux/.test(plat)) return buildTarget("rocky", "9.4", arch);
+      return buildTarget("rocky", "9.4", arch);
+    }
+
+    function syncSelectsFromTarget() {
+      var osSel = document.getElementById("osSelect");
+      var verSel = document.getElementById("verSelect");
+      var archSel = document.getElementById("archSelect");
+      if (!osSel || !TARGET) return;
+      osSel.value = TARGET.osId;
+      refillOsVersions();
+      if (verSel) verSel.value = TARGET.version;
+      if (archSel) archSel.value = TARGET.arch;
+    }
+
+    function applyTargetChange(opts) {
+      opts = opts || {};
+      syncProfileAlias();
+      refreshMiniconda();
+      saveTarget();
+      updateAdaptStrip();
+      renderOsSummary();
+      renderRecChips();
+      applyAdaptiveRenders();
+      filterNav((document.getElementById("navSearch") || {}).value || "");
+      if (opts.jumpPanel && TARGET.panel) switchSource(TARGET.panel);
+      if (!opts.quiet) toast("已切换为 " + TARGET.label + " " + TARGET.version, true);
+    }
+
+    function openOsModal() {
+      var modal = document.getElementById("osModal");
+      if (!modal) return;
+      modal.hidden = false;
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("os-modal-open");
+      syncSelectsFromTarget();
+      renderOsSummary();
+      renderRecChips();
+      setTimeout(function() {
+        var osSel = document.getElementById("osSelect");
+        if (osSel) osSel.focus();
+      }, 30);
+    }
+
+    function closeOsModal() {
+      var modal = document.getElementById("osModal");
+      if (!modal) return;
+      modal.hidden = true;
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("os-modal-open");
+    }
+
+    function toggleOsModal() {
+      var modal = document.getElementById("osModal");
+      if (!modal) return;
+      if (modal.hidden) openOsModal();
+      else closeOsModal();
+    }
+
+    function refillOsVersions() {
+      var osSel = document.getElementById("osSelect");
+      var verSel = document.getElementById("verSelect");
+      if (!osSel || !verSel) return;
+      var os = findOs(osSel.value);
+      verSel.innerHTML = os.versions.map(function(ver) {
+        var label = ver.codename ? (ver.v + " (" + ver.codename + ")") : ver.v;
+        if (ver.stream) label = ver.stream;
+        return '<option value="' + ver.v + '">' + label + "</option>";
+      }).join("");
+    }
+
+    function fillOsSelects() {
+      var osSel = document.getElementById("osSelect");
+      var verSel = document.getElementById("verSelect");
+      var archSel = document.getElementById("archSelect");
+      var fitBox = document.getElementById("fitOnly");
+      var saved = loadSavedTarget();
+      TARGET = saved || detectOsGuess();
+      if (!saved) saveTarget();
+
+      if (fitBox) {
+        fitBox.checked = loadFitOnly();
+        fitBox.addEventListener("change", function() {
+          saveFitOnly(!!fitBox.checked);
+          filterNav((document.getElementById("navSearch") || {}).value || "");
+          toast(fitBox.checked ? "侧栏已按系统过滤" : "侧栏显示全部软件源", true);
+        });
+      }
+
+      if (osSel && verSel && archSel) {
+        osSel.innerHTML = OS_CATALOG.map(function(o) {
+          return '<option value="' + o.id + '">' + o.label + "</option>";
+        }).join("");
+        syncSelectsFromTarget();
+
+        osSel.addEventListener("change", function() {
+          refillOsVersions();
+          var os = findOs(osSel.value);
+          var prefer = preferVersionFor(os);
+          if (prefer && os.versions.some(function(x) { return x.v === prefer; })) verSel.value = prefer;
+          else verSel.selectedIndex = Math.max(0, os.versions.length - 1);
+          TARGET = buildTarget(osSel.value, verSel.value, archSel.value);
+          applyTargetChange({ quiet: false, jumpPanel: true });
+        });
+        verSel.addEventListener("change", function() {
+          TARGET = buildTarget(osSel.value, verSel.value, archSel.value);
+          applyTargetChange({ quiet: false });
+        });
+        archSel.addEventListener("change", function() {
+          TARGET = buildTarget(osSel.value, verSel.value, archSel.value);
+          applyTargetChange({ quiet: false });
+        });
+      }
+
+      var detectBtn = document.getElementById("detectOsBtn");
+      if (detectBtn) {
+        detectBtn.addEventListener("click", function() {
+          TARGET = detectOsGuess();
+          syncSelectsFromTarget();
+          applyTargetChange({ quiet: false, jumpPanel: true });
+          toast("已按浏览器环境识别（Linux 发行版可能需手动校正）", true);
+        });
+      }
+
+      syncProfileAlias();
+      refreshMiniconda();
+      updateAdaptStrip();
+      renderOsSummary();
+
+      window.syncOsFromPanel = function(panelName, quiet) {
+        var hit = null;
+        for (var i = 0; i < OS_CATALOG.length; i++) {
+          if (OS_CATALOG[i].panel === panelName || OS_CATALOG[i].id === panelName) {
+            hit = OS_CATALOG[i];
+            break;
+          }
+        }
+        if (!hit) return false;
+        if (TARGET && TARGET.osId === hit.id) {
+          switchSource(hit.panel || hit.id);
+          return true;
+        }
+        var prefer = preferVersionFor(hit);
+        var ver = prefer && hit.versions.some(function(x) { return x.v === prefer; })
+          ? prefer
+          : hit.versions[hit.versions.length - 1].v;
+        var arch = (TARGET && TARGET.arch) || "x86_64";
+        TARGET = buildTarget(hit.id, ver, arch);
+        syncSelectsFromTarget();
+        applyTargetChange({ quiet: quiet !== false, jumpPanel: true });
+        return true;
+      };
+
+      ["adaptStripOpen", "adaptChangeBtn"].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener("click", function(e) {
+          e.preventDefault();
+          openOsModal();
+        });
+      });
+      document.querySelectorAll("[data-os-close]").forEach(function(el) {
+        el.addEventListener("click", function() { closeOsModal(); });
+      });
+      document.addEventListener("keydown", function(e) {
+        if ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K")) {
+          e.preventDefault();
+          toggleOsModal();
+          return;
+        }
+        if (e.key === "Escape") {
+          var modal = document.getElementById("osModal");
+          if (modal && !modal.hidden) {
+            e.preventDefault();
+            closeOsModal();
+          }
+        }
+      });
+
+      renderRecChips();
+      filterNav("");
+    }
+
+        function renderOsSummary() {
+      updateAdaptStrip();
+      var box = document.getElementById("osSummary");
+      if (!box || !TARGET) return;
+      var osUrl = mirrorUrl(TARGET.osRel);
+      var dockerUrl = mirrorUrl("soft_mirrors/docker-ce/linux/" + TARGET.dockerDistro + "/");
+      var nvidiaUrl = mirrorUrl("soft_mirrors/NVIDIA/" + TARGET.nvidiaDir + "/");
+      var rows = [
+        ["系统源", '<a href="' + osUrl + '" target="_blank" rel="noopener">' + osUrl + "</a>"],
+        ["Docker", '<a href="' + dockerUrl + '" target="_blank" rel="noopener">' + dockerUrl + "</a>"],
+        ["NVIDIA", '<a href="' + nvidiaUrl + '" target="_blank" rel="noopener">' + nvidiaUrl + "</a>"]
+      ];
+      if (TARGET.family === "rhel" || TARGET.family === "fedora") {
+        var ep = mirrorUrl("os_mirrors/epel/" + TARGET.el + "/");
+        rows.push(["EPEL", '<a href="' + ep + '" target="_blank" rel="noopener">' + ep + "</a>"]);
+      }
+      var mysqlBrowse = TARGET.family === "debian"
+        ? mirrorUrl("soft_mirrors/mysql/apt/" + (TARGET.osId === "debian" ? "debian" : "ubuntu") + "/")
+        : mirrorUrl("soft_mirrors/mysql/yum/");
+      var mongoBrowse = TARGET.family === "debian"
+        ? mirrorUrl("soft_mirrors/mongodb/apt/" + (TARGET.osId === "debian" ? "debian" : "ubuntu") + "/")
+        : mirrorUrl("soft_mirrors/mongodb/yum/");
+      rows.push(["MySQL", '<a href="' + mysqlBrowse + '" target="_blank" rel="noopener">' + mysqlBrowse + "</a>"]);
+      rows.push(["MongoDB", '<a href="' + mongoBrowse + '" target="_blank" rel="noopener">' + mongoBrowse + "</a>"]);
+      if (TARGET.codename) rows.push(["代号", TARGET.codename]);
+      if (TARGET.stream) rows.push(["Stream", TARGET.stream]);
+      box.innerHTML = rows.map(function(r) {
+        return '<div class="sum-row"><div class="sum-k">' + r[0] + '</div><div class="sum-v">' +
+          (r[1].indexOf("<a ") === 0 ? r[1] : ("<code>" + r[1] + "</code>")) +
+          "</div></div>";
+      }).join("") +
+        '<div class="sum-row"><div class="sum-k">操作</div><div class="sum-v">' +
+        '<button type="button" class="chip" id="copyAdaptUrls">复制全部适配 URL</button></div></div>';
+      var copyBtn = document.getElementById("copyAdaptUrls");
+      if (copyBtn) {
+        copyBtn.onclick = async function() {
+          var lines = [
+            "系统: " + TARGET.label + " " + TARGET.version + " / " + TARGET.arch,
+            "系统源: " + osUrl,
+            "Docker: " + dockerUrl,
+            "NVIDIA: " + nvidiaUrl
+          ];
+          if (TARGET.family === "rhel" || TARGET.family === "fedora") {
+            lines.push("EPEL: " + mirrorUrl("os_mirrors/epel/" + TARGET.el + "/"));
+          }
+          lines.push("MySQL: " + mysqlBrowse);
+          lines.push("MongoDB: " + mongoBrowse);
+          var ok = await copyText(lines.join("\n"));
+          if (ok) toast("已复制适配 URL", true);
+        };
+      }
+    }
+
+    function renderRecChips() {
+      var rec = document.getElementById("recChips");
+      if (rec) {
+        rec.querySelectorAll("button.chip").forEach(function(b) { b.remove(); });
+        TARGET.prefer.forEach(function(key) {
+          var a = document.querySelector('.nav a[data-source="' + key + '"]');
+          if (!a) return;
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "chip rec";
+          btn.textContent = a.textContent.replace(/\s*荐\s*$/, "").replace(/\s+/g, " ").trim();
+          btn.addEventListener("click", function() {
+            if (typeof window.syncOsFromPanel === "function" && window.syncOsFromPanel(key, true)) {
+              closeOsModal();
+              return;
+            }
+            switchSource(key);
+            closeOsModal();
+          });
+          rec.appendChild(btn);
+        });
+      }
+      document.querySelectorAll(".nav a[data-source] .badge-rec").forEach(function(b) { b.remove(); });
+      TARGET.prefer.forEach(function(key) {
+        var a = document.querySelector('.nav a[data-source="' + key + '"]');
+        if (!a || a.querySelector(".badge-rec")) return;
+        var badge = document.createElement("span");
+        badge.className = "badge-rec";
+        badge.textContent = "荐";
+        a.appendChild(badge);
+      });
+      renderRecentChips();
+    }
+
+    function filterNav(q) {
+      q = (q || "").trim().toLowerCase();
+      var fitBox = document.getElementById("fitOnly");
+      var fitOnly = fitBox ? !!fitBox.checked : loadFitOnly();
+      var family = (TARGET && TARGET.family) || "rhel";
+      var any = false;
+      document.querySelectorAll(".nav-group").forEach(function(g) {
+        var visible = 0;
+        g.querySelectorAll("a[data-source]").forEach(function(a) {
+          var hay = (a.dataset.source + " " + (a.dataset.tags || "") + " " + a.textContent).toLowerCase();
+          var okSearch = !q || hay.indexOf(q) !== -1;
+          var fit = a.dataset.fit || "all";
+          var okFit = !fitOnly || fit === "all" || fit === family;
+          if (TARGET && (a.dataset.source === TARGET.osId || a.dataset.source === TARGET.panel)) okFit = true;
+          var ok = okSearch && okFit;
+          a.hidden = !ok;
+          if (ok) { visible++; any = true; }
+        });
+        g.hidden = visible === 0;
+      });
+      var empty = document.getElementById("navEmpty");
+      if (empty) empty.classList.toggle("show", !any);
+    }
+
+    function applyAdaptiveRenders() {
+      refreshMiniconda();
+      [
+        renderConda, renderPypi, renderGo, renderRust,
+        renderUbuntu, renderDebian, renderCentOSStream, renderRocky,
+        renderAlma, renderFedora, renderEPEL, renderRhel, renderOpenEuler, renderOpenSUSE,
+        renderDocker, renderKubernetes, renderApptainer,
+        renderMySQL, renderMongoDB, renderPython, renderJulia,
+        renderNodeJS, renderSpack, renderNVIDIA, renderCRAN, renderBioconductor
+      ].forEach(function(fn) { try { fn(); } catch (err) { console.error(fn.name, err); } });
+    }
+
+
+
+
+    function setText(id, text) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = text;
+    }
+    function setUrl(id, url) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var a = document.createElement("a");
+      a.href = url;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.textContent = url;
+      el.textContent = "";
+      el.appendChild(a);
+    }
+    function t() { return TARGET || buildTarget("rocky", "9.4", "x86_64"); }
+    function noteFor(panelId, opts) {
+      var cur = t();
+      var head;
+      if (!panelId || cur.panel === panelId || cur.osId === panelId) {
+        head = "# 已按系统设置生成：" + cur.label + " " + cur.version + " / " + cur.arch + "\n";
+      } else {
+        head = "# 系统设置当前为 " + cur.label + " " + cur.version + "；本页为该系统源独立配置\n";
+      }
+      if ((opts && opts.gpg) || (panelId && /centos|rocky|almalinux|fedora|epel|rhel|openeuler|mysql|mongodb|k8s|nvidia|docker/.test(String(panelId)))) {
+        head += "# 已启用 gpgcheck=1，请确保已导入对应官方 GPG 密钥\n";
+      }
+      return head;
+    }
+
+    function majorOf(ver) {
+      var m = String(ver || "").match(/^(\d+)/);
+      return m ? m[1] : "9";
+    }
+
+    /** 发行版本地密钥路径（一键 sed 改源时系统已自带；手写 .repo 需写出） */
+    function distroGpgKey(kind, ver) {
+      var maj = majorOf(ver);
+      if (kind === "rocky") return "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-" + maj;
+      if (kind === "almalinux") return "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-AlmaLinux-" + maj;
+      if (kind === "centos") return "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial";
+      if (kind === "fedora") return "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-" + maj + "-$basearch";
+      if (kind === "epel") return "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-" + maj;
+      return "";
+    }
+
+    function yumRepoFlags(gpgkey) {
+      var out = "enabled=1\ngpgcheck=1\n";
+      if (gpgkey) out += "gpgkey=" + gpgkey + "\n";
+      return out;
+    }
+
+    function setAdaptBanner(panelId, lines) {
+      var panel = document.getElementById("panel-" + panelId);
+      if (!panel) return;
+      var box = panel.querySelector(".panel-adapt");
+      if (!box) {
+        box = document.createElement("div");
+        box.className = "panel-adapt";
+        box.setAttribute("role", "note");
+        var h1 = panel.querySelector("h1");
+        if (h1 && h1.nextSibling) panel.insertBefore(box, h1.nextSibling);
+        else panel.insertBefore(box, panel.firstChild);
+      }
+      var cur = t();
+      var bits = [
+        "当前适配：<strong>" + cur.label + " " + cur.version + "</strong> · <strong>" + cur.arch + "</strong>"
+      ];
+      (lines || []).forEach(function(x) {
+        if (!x) return;
+        bits.push(x.indexOf("<") === 0 ? x : ("<code>" + x + "</code>"));
+      });
+      box.innerHTML = bits.join(" · ");
+    }
+
+    /* ========== Conda / PyPI ========== */
+    function renderConda() {
+      var select = document.getElementById("condaChannel");
+      if (!select.options.length) {
+        select.innerHTML = CONDA_CHANNELS.map(function(c) {
+          return '<option value="' + c.key + '">' + c.name + "</option>";
+        }).join("");
+        select.value = "conda-forge";
+        select.onchange = updateConda;
+      }
+      var condarc =
+        "cat > ~/.condarc << 'EOF'\n" +
+        "channels:\n  - defaults\n" +
+        "default_channels:\n" +
+        "  - " + mirrorUrl("soft_mirrors/conda/pkgs/main/") + "\n" +
+        "  - " + mirrorUrl("soft_mirrors/conda/pkgs/free/") + "\n" +
+        "  - " + mirrorUrl("soft_mirrors/conda/pkgs/r/") + "\n" +
+        "  - " + mirrorUrl("soft_mirrors/conda/pkgs/msys2/") + "\n" +
+        "custom_channels:\n" +
+        "  conda-forge: " + CONDA_CLOUD + "\n" +
+        "  bioconda:    " + CONDA_CLOUD + "\n" +
+        "  pytorch:     " + CONDA_CLOUD + "\n" +
+        "ssl_verify: true\nEOF";
+      setText("condaCommand", condarc);
+      setUrl("condaMiniconda", MINICONDA);
+      setText("condaSed", "wget " + MINICONDA + "\nbash " + t().miniconda);
+      updateConda();
+    }
+    function updateConda() {
+      var item = CONDA_CHANNELS.filter(function(c) {
+        return c.key === document.getElementById("condaChannel").value;
+      })[0] || CONDA_CHANNELS[0];
+      setUrl("condaUrl", item.url);
+      setText("condaTemp", "conda install -c " + item.url + " <包名>");
+    }
+    function renderPypi() {
+      setText("pypiCommand",
+        "pip config set global.index-url " + PYPI_URL);
+      setUrl("pypiUrl", PYPI_URL);
+      setText("pypiSed",
+        "mkdir -p ~/.config/pip\n" +
+        "cat > ~/.config/pip/pip.conf << 'EOF'\n[global]\n" +
+        "index-url = " + PYPI_URL + "\nEOF");
+    }
+
+    /* ========== 语言工具 ========== */
+    function renderGo() {
+      var url = mirrorUrl(SOFT.golang);
+      var ver = "go1.27.1.linux-" + t().goArch + ".tar.gz";
+      var cmd =
+        noteFor(null) +
+        "wget " + url + ver + "\n" +
+        "sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf " + ver + "\n" +
+        "export PATH=/usr/local/go/bin:$PATH && go version";
+      setText("goCommand", cmd);
+      setUrl("goUrl", url);
+      setText("goSed", "echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc && source ~/.bashrc");
+      setUrl("goVersionUrl", url);
+    }
+    function renderRust() {
+      var dist = mirrorUrl(SOFT.rust).replace(/\/$/, "");
+      var rustup = dist + "/rustup";
+      var init = rustup + "/dist/" + t().rustTarget + "/rustup-init";
+      var cmd =
+        noteFor(null) +
+        "export RUSTUP_DIST_SERVER=" + dist + "\n" +
+        "export RUSTUP_UPDATE_ROOT=" + rustup + "\n" +
+        "curl -fL " + init + " -o rustup-init && chmod +x rustup-init\n" +
+        "./rustup-init -y --default-toolchain stable --profile minimal";
+      setText("rustCommand", cmd);
+      setUrl("rustUrl", dist + "/");
+      setText("rustSed",
+        "cat >> ~/.bashrc << 'EOF'\nexport RUSTUP_DIST_SERVER=" + dist +
+        "\nexport RUSTUP_UPDATE_ROOT=" + rustup + "\nEOF\nsource ~/.bashrc");
+    }
+
+    /* ========== OS 源（按顶部选择适配） ========== */
+    function renderUbuntu() {
+      var cur = t();
+      var codename = cur.osId === "ubuntu" ? cur.codename : "jammy";
+      var verLabel = cur.osId === "ubuntu" ? cur.version : "22.04";
+      var url = mirrorUrl(OS.ubuntu).replace(/\/$/, "");
+      var cmd =
+        noteFor("ubuntu") +
+        "# Ubuntu " + verLabel + " (" + codename + ")\n" +
+        "sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak\n" +
+        "sudo sed -i 's|http://[a-z0-9.-]*\\.archive\\.ubuntu\\.com/ubuntu|" + url + "|g' /etc/apt/sources.list\n" +
+        "sudo sed -i 's|http://security\\.ubuntu\\.com/ubuntu|" + url + "|g' /etc/apt/sources.list\n" +
+        "sudo sed -i 's|https://[a-z0-9.-]*\\.archive\\.ubuntu\\.com/ubuntu|" + url + "|g' /etc/apt/sources.list\n" +
+        "sudo apt update";
+      var sedCmd =
+        "cat > /tmp/sources.list << 'EOF'\n" +
+        "deb " + url + "/ " + codename + " main restricted universe multiverse\n" +
+        "deb " + url + "/ " + codename + "-updates main restricted universe multiverse\n" +
+        "deb " + url + "/ " + codename + "-backports main restricted universe multiverse\n" +
+        "deb " + url + "/ " + codename + "-security main restricted universe multiverse\n" +
+        "EOF\nsudo mv /tmp/sources.list /etc/apt/sources.list && sudo apt update";
+      setText("ubuntuCommand", cmd);
+      setUrl("ubuntuUrl", url + "/");
+      setText("ubuntuSed", sedCmd);
+      var listEl = document.getElementById("ubuntuListUrl");
+      if (listEl) setUrl("ubuntuListUrl", url + "/");
+      setAdaptBanner("ubuntu", [url + "/"]);
+    }
+
+    function renderDebian() {
+      var cur = t();
+      var codename = cur.osId === "debian" ? cur.codename : "bookworm";
+      var verLabel = cur.osId === "debian" ? cur.version : "12";
+      var root = mirrorUrl(OS.debian).replace(/\/$/, "");
+      var deb = root + "/debian";
+      var cmd =
+        noteFor("debian") +
+        "# Debian " + verLabel + " (" + codename + ")\n" +
+        "sudo sed -i 's|http://deb\\.debian\\.org/debian|" + deb + "|g' /etc/apt/sources.list\n" +
+        "sudo sed -i 's|http://security\\.debian\\.org/debian-security|" + root + "/debian-security|g' /etc/apt/sources.list\n" +
+        "sudo apt update";
+      var sedCmd =
+        "cat > /tmp/sources.list << 'EOF'\n" +
+        "deb " + deb + " " + codename + " main contrib non-free non-free-firmware\n" +
+        "deb " + root + "/debian-security " + codename + "-security main contrib non-free non-free-firmware\n" +
+        "deb " + deb + " " + codename + "-updates main contrib non-free non-free-firmware\n" +
+        "EOF\nsudo mv /tmp/sources.list /etc/apt/sources.list && sudo apt update";
+      setText("debianCommand", cmd);
+      setUrl("debianUrl", deb + "/");
+      setText("debianSed", sedCmd);
+      setAdaptBanner("debian", [deb + "/"]);
+    }
+
+    function renderCentOSStream() {
+      var cur = t();
+      var stream = (cur.osId === "centos-stream" && cur.stream) ? cur.stream : "9-stream";
+      var url = mirrorUrl(OS.centos).replace(/\/$/, "");
+      var base = url + "/" + stream;
+      var cmd =
+        noteFor("centos-stream") +
+        "# CentOS Stream 目录：" + stream + "\n" +
+        "sudo sed -i 's|^mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/centos*.repo\n" +
+        "sudo sed -i 's|^#baseurl=http://mirror.stream.centos.org|baseurl=" + url + "|g' /etc/yum.repos.d/centos*.repo\n" +
+        "sudo dnf makecache";
+      var sedCmd =
+        "cat > /tmp/centos-stream.repo << 'EOF'\n" +
+        "[baseos]\nname=CentOS Stream - BaseOS\n" +
+        "baseurl=" + base + "/BaseOS/$basearch/os/\n" + yumRepoFlags(distroGpgKey("centos")) + "\n" +
+        "[appstream]\nname=CentOS Stream - AppStream\n" +
+        "baseurl=" + base + "/AppStream/$basearch/os/\n" + yumRepoFlags(distroGpgKey("centos")) +
+        "EOF\nsudo mv /tmp/centos-stream.repo /etc/yum.repos.d/centos-stream.repo && sudo dnf makecache";
+      setText("centosCommand", cmd);
+      setUrl("centosUrl", base + "/");
+      setText("centosSed", sedCmd);
+      setAdaptBanner("centos-stream", [base + "/"]);
+    }
+
+    function renderRocky() {
+      var cur = t();
+      var ver = cur.osId === "rocky" ? cur.version : "9";
+      var repo = cur.osId === "rocky" ? cur.osRel.replace(/\/$/, "").split("/").pop() : "9";
+      var url = mirrorUrl("os_mirrors/cd-images/rocky-releases/" + repo).replace(/\/$/, "");
+      var cmd =
+        noteFor("rocky") +
+        "# Rocky Linux " + ver + "（yum 根目录使用 " + repo + "）\n" +
+        "sudo sed -i 's|^mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/rocky*.repo\n" +
+        "sudo sed -i 's|^#baseurl=http://dl.rockylinux.org/\$contentdir|baseurl=" + url + "|g' /etc/yum.repos.d/rocky*.repo\n" +
+        "sudo dnf makecache";
+      var sedCmd =
+        "cat > /tmp/rocky.repo << 'EOF'\n" +
+        "[baseos]\nname=Rocky Linux " + ver + " - BaseOS\n" +
+        "baseurl=" + url + "/BaseOS/$basearch/os/\n" + yumRepoFlags(distroGpgKey("rocky", ver)) + "\n" +
+        "[appstream]\nname=Rocky Linux " + ver + " - AppStream\n" +
+        "baseurl=" + url + "/AppStream/$basearch/os/\n" + yumRepoFlags(distroGpgKey("rocky", ver)) +
+        "EOF\nsudo mv /tmp/rocky.repo /etc/yum.repos.d/rocky.repo && sudo dnf makecache";
+      setText("rockyCommand", cmd);
+      setUrl("rockyUrl", url + "/");
+      setText("rockySed", sedCmd);
+      setAdaptBanner("rocky", [url + "/"]);
+    }
+
+    function renderAlma() {
+      var cur = t();
+      var ver = cur.osId === "almalinux" ? cur.version : "9";
+      var repo = cur.osId === "almalinux" ? cur.osRel.replace(/\/$/, "").split("/").pop() : "9";
+      var url = mirrorUrl("os_mirrors/cd-images/almalinux/" + repo).replace(/\/$/, "");
+      var cmd =
+        noteFor("almalinux") +
+        "# AlmaLinux " + ver + "（yum 根目录使用 " + repo + "）\n" +
+        "sudo sed -i 's|^mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/almalinux*.repo\n" +
+        "sudo sed -i 's|^# baseurl=https://repo.almalinux.org/almalinux|baseurl=" + url + "|g' /etc/yum.repos.d/almalinux*.repo\n" +
+        "sudo dnf makecache";
+      var sedCmd =
+        "cat > /tmp/almalinux.repo << 'EOF'\n" +
+        "[baseos]\nname=AlmaLinux " + ver + " - BaseOS\n" +
+        "baseurl=" + url + "/BaseOS/$basearch/os/\n" + yumRepoFlags(distroGpgKey("almalinux", ver)) + "\n" +
+        "[appstream]\nname=AlmaLinux " + ver + " - AppStream\n" +
+        "baseurl=" + url + "/AppStream/$basearch/os/\n" + yumRepoFlags(distroGpgKey("almalinux", ver)) +
+        "EOF\nsudo mv /tmp/almalinux.repo /etc/yum.repos.d/almalinux.repo && sudo dnf makecache";
+      setText("almaCommand", cmd);
+      setUrl("almaUrl", url + "/");
+      setText("almaSed", sedCmd);
+      setAdaptBanner("almalinux", [url + "/"]);
+    }
+
+    function renderFedora() {
+      var cur = t();
+      var ver = cur.osId === "fedora" ? cur.version : "40";
+      var url = mirrorUrl(OS.fedora).replace(/\/$/, "");
+      var cmd =
+        noteFor("fedora") +
+        "# Fedora " + ver + "\n" +
+        "sudo sed -i 's|^metalink=|#metalink=|g' /etc/yum.repos.d/fedora*.repo\n" +
+        "sudo sed -i 's|^#baseurl=http://download.example/pub/fedora/linux|baseurl=" + url + "|g' /etc/yum.repos.d/fedora*.repo\n" +
+        "sudo dnf makecache";
+      var sedCmd =
+        "cat > /tmp/fedora.repo << 'EOF'\n" +
+        "[fedora]\nname=Fedora " + ver + "\n" +
+        "baseurl=" + url + "/releases/" + ver + "/Everything/$basearch/os/\n" + yumRepoFlags(distroGpgKey("fedora", ver)) + "\n" +
+        "[updates]\nname=Fedora " + ver + " Updates\n" +
+        "baseurl=" + url + "/updates/" + ver + "/Everything/$basearch/\n" + yumRepoFlags(distroGpgKey("fedora", ver)) +
+        "EOF\nsudo mv /tmp/fedora.repo /etc/yum.repos.d/fedora.repo && sudo dnf makecache";
+      setText("fedoraCommand", cmd);
+      setUrl("fedoraUrl", url + "/");
+      setText("fedoraSed", sedCmd);
+      setAdaptBanner("fedora", [url + "/"]);
+    }
+
+    function renderRhel() {
+      var cur = t();
+      var ver = cur.osId === "rhel" ? cur.version : "9.4";
+      var url = mirrorUrl(cur.osId === "rhel" ? cur.osRel : ("os_mirrors/rhel/" + ver + "/")).replace(/\/$/, "");
+      var cmd =
+        noteFor("rhel") +
+        "# RHEL " + ver + "\n" +
+        "# 系统源目录（将订阅仓库 baseurl 指到本站）：\n" +
+        "# " + url + "/\n" +
+        "sudo mkdir -p /etc/yum.repos.d/backup\n" +
+        "sudo cp /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/ 2>/dev/null || true";
+      setText("rhelCommand", cmd);
+      setUrl("rhelUrl", url + "/");
+      setText("rhelSed", "# 浏览：" + url + "/\n# 请按实际仓库结构配置 BaseOS/AppStream 等");
+      setAdaptBanner("rhel", [url + "/"]);
+    }
+
+    function renderOpenEuler() {
+      var cur = t();
+      var url = mirrorUrl(cur.osId === "openeuler" ? cur.osRel : "os_mirrors/cd-images/openEuler/openEuler-22.03-LTS/").replace(/\/$/, "");
+      var ver = cur.osId === "openeuler" ? cur.version : "22.03-LTS";
+      var root = mirrorUrl("os_mirrors/cd-images/openEuler/").replace(/\/$/, "");
+      var cmd =
+        noteFor("openeuler") +
+        "# openEuler " + ver + "\n" +
+        "# 版本目录：" + url + "/\n" +
+        "sudo sed -i 's|http://repo.openeuler.org|" + root + "|g' /etc/yum.repos.d/openEuler*.repo 2>/dev/null || true\n" +
+        "sudo dnf makecache";
+      setText("openeulerCommand", cmd);
+      setUrl("openeulerUrl", url + "/");
+      setText("openeulerSed", "# 全部版本浏览：" + root + "/\n# 当前：" + url + "/");
+      setAdaptBanner("openeuler", [url + "/"]);
+    }
+
+    function renderOpenSUSE() {
+      var cur = t();
+      var ver = cur.osId === "opensuse" ? cur.version : "15.6";
+      var url = mirrorUrl("os_mirrors/cd-images/openSUSE/distribution/leap/" + ver + "/").replace(/\/$/, "");
+      var cmd =
+        noteFor("opensuse") +
+        "# openSUSE Leap " + ver + "\n" +
+        "sudo zypper mr -da\n" +
+        "sudo zypper ar -f " + url + "/repo/oss/ tibhpc-oss\n" +
+        "sudo zypper ar -f " + url + "/repo/non-oss/ tibhpc-non-oss\n" +
+        "sudo zypper ref";
+      setText("opensuseCommand", cmd);
+      setUrl("opensuseUrl", url + "/");
+      setText("opensuseSed", "# Leap 根目录：" + url + "/\n# 常见：repo/oss/ 、repo/non-oss/");
+      setAdaptBanner("opensuse", [url + "/"]);
+    }
+
+    function renderEPEL() {
+      var cur = t();
+      var el = (cur.family === "rhel" || cur.family === "fedora") ? cur.el : "9";
+      var url = mirrorUrl(OS.epel).replace(/\/$/, "");
+      var base = url + "/" + el;
+      var cmd =
+        noteFor("epel") +
+        "# 适配 EPEL " + el + "（来自顶部系统大版本）\n" +
+        "sudo dnf install -y epel-release\n" +
+        "sudo sed -i 's|^metalink=|#metalink=|g' /etc/yum.repos.d/epel*.repo\n" +
+        "sudo sed -i 's|https://download.fedoraproject.org/pub/epel|" + url + "|g' /etc/yum.repos.d/epel*.repo\n" +
+        "sudo dnf makecache";
+      var sedCmd =
+        "cat > /tmp/epel.repo << 'EOF'\n[epel]\n" +
+        "name=Extra Packages for Enterprise Linux " + el + " - $basearch\n" +
+        "baseurl=" + base + "/Everything/$basearch\n" + yumRepoFlags(distroGpgKey("epel", el)) +
+        "EOF\nsudo mv /tmp/epel.repo /etc/yum.repos.d/epel.repo && sudo dnf makecache";
+      setText("epelCommand", cmd);
+      setUrl("epelUrl", base + "/");
+      setText("epelSed", sedCmd);
+      setAdaptBanner("epel", [base + "/"]);
+    }
+
+    /* ========== 软件源（强依赖顶部系统） ========== */
+    function renderDocker() {
+      var cur = t();
+      var base = mirrorUrl(SOFT.docker).replace(/\/$/, "");
+      var distro = cur.dockerDistro;
+      var ver = cur.dockerVer;
+      var repo = base + "/linux/" + distro + "/docker-ce.repo";
+      var installCmd;
+      if (cur.family === "debian") {
+        var codename = cur.codename || "bookworm";
+        installCmd =
+          noteFor("docker") +
+          "# Docker CE · " + cur.label + " " + cur.version + " (" + codename + ")\n" +
+          "sudo apt update && sudo apt install -y ca-certificates curl gnupg\n" +
+          "sudo install -m 0755 -d /etc/apt/keyrings\n" +
+          "curl -fsSL https://download.docker.com/linux/" + distro + "/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg\n" +
+          "echo \"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] " + base + "/linux/" + distro +
+          " " + codename + " stable\" | sudo tee /etc/apt/sources.list.d/docker.list\n" +
+          "sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io";
+      } else {
+        installCmd =
+          noteFor("docker") +
+          "# Docker CE · " + cur.label + " " + ver + " → linux/" + distro + "/\n" +
+          "sudo dnf install -y dnf-plugins-core\n" +
+          "sudo curl -fsSL " + repo + " -o /etc/yum.repos.d/docker-ce.repo\n" +
+          "sudo sed -i 's|https://download.docker.com|" + base + "|g' /etc/yum.repos.d/docker-ce.repo\n" +
+          "# 如需钉死小版本，可将 baseurl 中的 $releasever 换成 " + ver + "\n" +
+          "sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin\n" +
+          "sudo systemctl enable --now docker";
+      }
+      setText("dockerInstall", installCmd);
+      setUrl("dockerUrl", base + "/linux/" + distro + "/");
+      setText("dockerSed",
+        "# 发行版仓库目录\n" + base + "/linux/" + distro + "/\n" +
+        "# repo 文件\n" + repo);
+      setAdaptBanner("docker", [base + "/linux/" + distro + "/"]);
+    }
+
+    function renderKubernetes() {
+      var cur = t();
+      var base = mirrorUrl(SOFT.k8s).replace(/\/$/, "");
+      var ver = "v1.33";
+      var rpm = base + "/core:/stable:/" + ver + "/rpm/";
+      var deb = base + "/core:/stable:/" + ver + "/deb/";
+      var cmd;
+      if (cur.pkg === "apt") {
+        cmd =
+          noteFor("k8s") +
+          "# Kubernetes " + ver + " · apt (pkgs.k8s.io 布局)\n" +
+          "sudo apt update && sudo apt install -y apt-transport-https ca-certificates curl gpg\n" +
+          "curl -fsSL " + deb + "Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg\n" +
+          "echo \"deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] " + deb +
+          " /\" | sudo tee /etc/apt/sources.list.d/kubernetes.list\n" +
+          "sudo apt update\n" +
+          "sudo apt install -y kubelet kubeadm kubectl\n" +
+          "sudo apt-mark hold kubelet kubeadm kubectl";
+        setAdaptBanner("kubernetes", [deb]);
+      } else {
+        cmd =
+          noteFor("k8s") +
+          "# Kubernetes " + ver + " · rpm\n" +
+          "cat > /tmp/kubernetes.repo << 'EOF'\n[kubernetes]\nname=Kubernetes " + ver + "\n" +
+          "baseurl=" + rpm + "\n" + yumRepoFlags(rpm + "repodata/repomd.xml.key") +
+          "EOF\n" +
+          "sudo mv /tmp/kubernetes.repo /etc/yum.repos.d/kubernetes.repo\n" +
+          "sudo dnf install -y kubelet kubeadm kubectl && sudo systemctl enable --now kubelet";
+        setAdaptBanner("kubernetes", [rpm]);
+      }
+      setText("k8sCommand", cmd);
+      setUrl("k8sUrl", base + "/");
+      setUrl("k8sVersionUrl", base + "/core:/stable:/");
+    }
+
+    function renderApptainer() {
+      var base = mirrorUrl(SOFT.apptainer);
+      var cur = t();
+      var cmd = cur.apptainerKind === "deb"
+        ? (noteFor(null) + "wget " + base + "apptainer_1.5.3_amd64.deb\nsudo apt install -y ./apptainer_1.5.3_amd64.deb\napptainer --version")
+        : (noteFor(null) + "wget " + base + "apptainer-1.5.3-1.x86_64.rpm\nsudo dnf install -y ./apptainer-1.5.3-1.x86_64.rpm\napptainer --version");
+      setText("apptainerCommand", cmd);
+      setUrl("apptainerUrl", base);
+      setAdaptBanner("apptainer", [base]);
+    }
+
+    function pickMirroredCodename(want, list, fallback) {
+      if (want && list.indexOf(want) >= 0) return { code: want, note: "" };
+      return {
+        code: fallback,
+        note: want && want !== fallback
+          ? "# 当前发行版代号暂无对应目录，已改用 " + fallback + "\n"
+          : ""
+      };
+    }
+
+    function renderMySQL() {
+      var cur = t();
+      var base = mirrorUrl(SOFT.mysql).replace(/\/$/, "");
+      var cmd, browse;
+      if (cur.family === "debian") {
+        var aptOs = cur.osId === "debian" ? "debian" : "ubuntu";
+        var avail = aptOs === "debian"
+          ? ["buster", "bullseye", "bookworm", "trixie", "stretch", "jessie"]
+          : ["trusty", "xenial", "bionic", "focal", "jammy", "noble", "resolute"];
+        var fb = aptOs === "debian" ? "bookworm" : "jammy";
+        var pick = pickMirroredCodename(cur.codename, avail, fb);
+        var aptBase = base + "/apt/" + aptOs;
+        var archDeb = cur.arch === "aarch64" ? "arm64" : "amd64";
+        cmd =
+          noteFor("mysql") + pick.note +
+          "# MySQL 8.0 · apt/" + aptOs + " " + pick.code + "\n" +
+          "sudo apt update && sudo apt install -y ca-certificates curl gnupg\n" +
+          "curl -fsSL https://repo.mysql.com/RPM-GPG-KEY-mysql-2023 | sudo gpg --dearmor -o /usr/share/keyrings/mysql.gpg\n" +
+          "echo \"deb [arch=" + archDeb + " signed-by=/usr/share/keyrings/mysql.gpg] " + aptBase + " " + pick.code +
+          " mysql-8.0 mysql-tools\" | sudo tee /etc/apt/sources.list.d/mysql.list\n" +
+          "sudo apt update && sudo apt install -y mysql-community-server";
+        browse = aptBase + "/";
+      } else {
+        var el = cur.el;
+        var elUse = ({ "7": "7", "8": "9", "9": "9", "10": "10" })[el] || "9";
+        var warn = (el === "8") ? "# 当前大版本无对应 MySQL yum 目录，已改用相近版本\n" : "";
+        if (cur.family === "suse") warn += "# openSUSE 无专用目录，以下按 RHEL 兼容 yum 给出\n";
+        var arch = cur.arch;
+        var mysqlKey = "https://repo.mysql.com/RPM-GPG-KEY-mysql-2023";
+        cmd =
+          noteFor("mysql") + warn +
+          "# MySQL · el" + elUse + " / " + arch + "\n" +
+          "cat > /tmp/mysql-community.repo << 'EOF'\n" +
+          "[mysql-8.0-community]\nname=MySQL 8.0 Community Server\n" +
+          "baseurl=" + base + "/yum/mysql-8.0-community-el" + elUse + "-" + arch + "\n" +
+          yumRepoFlags(mysqlKey) + "\n" +
+          "[mysql-tools-community]\nname=MySQL Tools Community\n" +
+          "baseurl=" + base + "/yum/mysql-tools-community-el" + elUse + "-" + arch + "\n" +
+          yumRepoFlags(mysqlKey) +
+          "EOF\n" +
+          "sudo mv /tmp/mysql-community.repo /etc/yum.repos.d/mysql-community.repo\n" +
+          "sudo dnf install -y mysql-community-server";
+        browse = base + "/yum/";
+      }
+      setText("mysqlCommand", cmd + "\n\n# 浏览：" + browse);
+      setUrl("mysqlUrl", browse);
+      setAdaptBanner("mysql", [browse]);
+    }
+
+    function renderMongoDB() {
+      var cur = t();
+      var base = mirrorUrl(SOFT.mongodb).replace(/\/$/, "");
+      var series = "8.0";
+      var mongoKey = "https://www.mongodb.org/static/pgp/server-" + series + ".asc";
+      var cmd, browse;
+      if (cur.family === "debian") {
+        var aptOs = cur.osId === "debian" ? "debian" : "ubuntu";
+        var avail = aptOs === "debian"
+          ? ["buster", "bullseye", "bookworm", "trixie", "stretch", "jessie"]
+          : ["trusty", "xenial", "bionic", "focal", "jammy", "noble", "resolute"];
+        var fb = aptOs === "debian" ? "bookworm" : "jammy";
+        var pick = pickMirroredCodename(cur.codename, avail, fb);
+        var aptBase = base + "/apt/" + aptOs;
+        var archDeb = cur.arch === "aarch64" ? "arm64" : "amd64";
+        cmd =
+          noteFor("mongodb") + pick.note +
+          "# MongoDB " + series + " · apt/" + aptOs + " " + pick.code + "\n" +
+          "sudo apt update && sudo apt install -y ca-certificates curl gnupg\n" +
+          "curl -fsSL " + mongoKey + " | sudo gpg --dearmor -o /usr/share/keyrings/mongodb.gpg\n" +
+          "echo \"deb [arch=" + archDeb + " signed-by=/usr/share/keyrings/mongodb.gpg] " + aptBase + " " + pick.code +
+          "/mongodb-org/" + series + " multiverse\" | sudo tee /etc/apt/sources.list.d/mongodb-org-" + series + ".list\n" +
+          "sudo apt update && sudo apt install -y mongodb-org";
+        browse = aptBase + "/";
+      } else {
+        var el = cur.el;
+        var elUse = ({ "7": "7", "8": "8", "9": "9", "10": "10" })[el] || "9";
+        var warn = cur.family === "suse" ? "# openSUSE 无专用目录，以下按 RHEL 兼容 yum 给出\n" : "";
+        cmd =
+          noteFor("mongodb") + warn +
+          "# MongoDB " + series + " · el" + elUse + "\n" +
+          "cat > /tmp/mongodb.repo << 'EOF'\n[mongodb-org-" + series + "]\n" +
+          "name=MongoDB Repository\n" +
+          "baseurl=" + base + "/yum/el" + elUse + "-" + series + "\n" +
+          yumRepoFlags(mongoKey) +
+          "EOF\n" +
+          "sudo mv /tmp/mongodb.repo /etc/yum.repos.d/mongodb.repo\n" +
+          "sudo dnf install -y mongodb-org";
+        browse = base + "/yum/";
+      }
+      setText("mongodbCommand", cmd + "\n\n# 浏览：" + browse);
+      setUrl("mongodbUrl", browse);
+      setAdaptBanner("mongodb", [browse]);
+    }
+
+    function renderPython() {
+      var base = mirrorUrl(SOFT.python);
+      var cmd =
+        noteFor(null) +
+        "VER=3.12.9\nwget " + base + "$VER/Python-$VER.tgz\n" +
+        "tar -xzf Python-$VER.tgz && cd Python-$VER\n" +
+        "./configure --enable-optimizations && make -j$(nproc) && sudo make altinstall";
+      setText("pythonCommand", cmd + "\n\n# pip 请走 PyPI：" + PYPI_URL);
+      setUrl("pythonUrl", base);
+      setUrl("pythonVersionUrl", base);
+    }
+
+    function renderJulia() {
+      var base = mirrorUrl(SOFT.julia);
+      var cmd =
+        noteFor(null) +
+        "SERIES=1.12\nVER=1.12.7\n" +
+        "wget " + base + "bin/linux/x64/$SERIES/julia-$VER-linux-x86_64.tar.gz\n" +
+        "tar -xzf julia-$VER-linux-x86_64.tar.gz && sudo mv julia-$VER /opt/julia\n" +
+        "echo 'export PATH=/opt/julia/bin:$PATH' >> ~/.bashrc && source ~/.bashrc";
+      setText("juliaCommand", cmd);
+      setUrl("juliaUrl", base);
+      setUrl("juliaVersionUrl", base + "bin/versions.json");
+    }
+
+    function renderNodeJS() {
+      var base = mirrorUrl(SOFT.nodejs);
+      var cmd =
+        noteFor(null) +
+        "VER=v22.23.2\nARCH=" + t().nodeArch + "\n" +
+        "wget " + base + "$VER/node-$VER-linux-$ARCH.tar.xz\n" +
+        "sudo tar -C /usr/local --strip-components=1 -xJf node-$VER-linux-$ARCH.tar.xz\n" +
+        "node --version && npm --version";
+      setText("nodejsCommand", cmd + "\n\n# npm registry 请另行配置");
+      setUrl("nodejsUrl", base);
+      setUrl("nodejsVersionUrl", base + "index.json");
+    }
+
+    function renderSpack() {
+      var base = mirrorUrl(SOFT.spack);
+      setText("spackCommand",
+        noteFor(null) +
+        "wget " + base + "spack-1.2.2.tar.gz\n" +
+        "tar -xzf spack-1.2.2.tar.gz && cd spack-1.2.2 && . share/spack/setup-env.sh");
+      setUrl("spackUrl", base);
+      setText("spackSed", "spack mirror add tibhpc " + base);
+    }
+
+    function renderNVIDIA() {
+      var cur = t();
+      var base = mirrorUrl(SOFT.nvidia).replace(/\/$/, "");
+      var dir = cur.nvidiaDir;
+      var arch = cur.arch;
+      var repo = base + "/" + dir + "/" + arch + "/";
+      var cmd;
+      if (cur.family === "debian") {
+        cmd =
+          noteFor("nvidia") +
+          "# NVIDIA/CUDA · " + dir + " / " + arch + "\n" +
+          "sudo apt update && sudo apt install -y wget ca-certificates\n" +
+          "cd /tmp && wget -N " + repo + "cuda-keyring_1.1-1_all.deb\n" +
+          "sudo dpkg -i /tmp/cuda-keyring_1.1-1_all.deb\n" +
+          "# 将官方域名替换为本站\n" +
+          "sudo sed -i 's|https://developer.download.nvidia.com/compute/cuda/repos|" + base + "|g' /etc/apt/sources.list.d/cuda*.list 2>/dev/null || true\n" +
+          "# 若仍无 list，用已安装 keyring 写入本站源：\n" +
+          "echo \"deb [signed-by=/usr/share/keyrings/cuda-archive-keyring.gpg] " + repo + " /\" | sudo tee /etc/apt/sources.list.d/cuda-local.list\n" +
+          "sudo apt update\n" +
+          "# 示例：sudo apt install -y cuda-toolkit-12-8";
+      } else {
+        cmd =
+          noteFor("nvidia") +
+          "# NVIDIA/CUDA · " + dir + " / " + arch + "\n" +
+          "sudo rpm --import https://developer.download.nvidia.com/compute/cuda/repos/" + dir + "/" + arch + "/D1003A67.pub 2>/dev/null || true\n" +
+          "cat > /tmp/cuda.repo << EOF\n[cuda-" + dir + "]\n" +
+          "name=NVIDIA CUDA (" + dir + ")\n" +
+          "baseurl=" + repo + "\n" +
+          yumRepoFlags("https://developer.download.nvidia.com/compute/cuda/repos/" + dir + "/" + arch + "/D1003A67.pub") +
+          "EOF\n" +
+          "sudo mv /tmp/cuda.repo /etc/yum.repos.d/cuda.repo && sudo dnf makecache\n" +
+          "# 示例：sudo dnf install -y cuda-toolkit";
+      }
+      setText("nvidiaCommand", cmd);
+      setUrl("nvidiaUrl", base + "/" + dir + "/");
+      setUrl("nvidiaVersionUrl", repo);
+      setAdaptBanner("nvidia", [repo]);
+    }
+
+    function renderCRAN() {
+      var url = mirrorUrl(SOFT.cran);
+      setText("cranCommand", "options(repos = c(CRAN = '" + url + "'))\ninstall.packages('ggplot2')");
+      setUrl("cranUrl", url);
+      setText("cranSed", "cat >> ~/.Rprofile << 'EOF'\noptions(repos = c(CRAN = '" + url + "'))\nEOF");
+    }
+
+    function renderBioconductor() {
+      var url = mirrorUrl(SOFT.bioc);
+      var cran = mirrorUrl(SOFT.cran);
+      setText("biocCommand",
+        "options(BioC_mirror = '" + url + "')\noptions(repos = c(CRAN = '" + cran + "'))");
+      setUrl("biocUrl", url);
+      setText("biocInstall",
+        "if (!requireNamespace('BiocManager', quietly = TRUE)) install.packages('BiocManager')\n" +
+        "options(BioC_mirror = '" + url + "')\nBiocManager::install('GenomicFeatures')");
+    }
+
+
+    /* ==================================================
+       面板切换 / 复制 / 折叠 / 回首页
+    ================================================== */
+    function switchSource(name) {
+      var panel = document.getElementById("panel-" + name);
+      if (!panel) return;
+      document.querySelectorAll(".source-panel").forEach(function(p) {
+        p.classList.toggle("active", p.id === "panel-" + name);
+      });
+      document.querySelectorAll(".nav a[data-source]").forEach(function(a) {
+        a.classList.toggle("active", a.dataset.source === name);
+      });
+      try { history.replaceState(null, "", "#" + name); } catch (_) {}
+      pushRecent(name);
+      var bar = document.getElementById("adaptStrip") || document.getElementById("smartBar");
+      if (bar) bar.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      else window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.querySelectorAll(".nav a[data-source]").forEach(function(a) {
+      a.addEventListener("click", function(e) {
+        e.preventDefault();
+        var name = a.dataset.source;
+        // 点击系统源时，同步系统适配偏好并重生成适配 URL
+        if (typeof window.syncOsFromPanel === "function" && window.syncOsFromPanel(name, true)) {
+          return;
+        }
+        switchSource(name);
+      });
+    });
+
+    function flashButton(btn) {
+      var oldHtml = btn.innerHTML;
+      btn.classList.add("copied");
+      btn.textContent = "已复制";
+      setTimeout(function() {
+        btn.classList.remove("copied");
+        btn.innerHTML = oldHtml;
+      }, 1200);
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (_) {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.cssText = "position:fixed;left:-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand("copy"); } catch (_) {}
+        document.body.removeChild(ta);
+        return ok;
+      }
+    }
+
+    document.addEventListener("click", async function(e) {
+      var btn = e.target.closest("[data-copy-target]");
+      if (!btn) return;
+      var el = document.getElementById(btn.dataset.copyTarget);
+      if (!el) return;
+      var ok = await copyText(el.textContent.trim());
+      if (ok) { flashButton(btn); toast("已复制到剪贴板", true); }
+    });
+
+    document.querySelectorAll("[data-fold]").forEach(function(q) {
+      q.addEventListener("click", function() {
+        q.parentElement.classList.toggle("open");
+      });
+    });
+
+    /* ==================================================
+       初始化
+    ================================================== */
+    [
+      renderConda, renderPypi, renderGo, renderRust,
+      renderUbuntu, renderDebian, renderCentOSStream, renderRocky,
+      renderAlma, renderFedora, renderEPEL, renderRhel, renderOpenEuler, renderOpenSUSE,
+      renderDocker, renderKubernetes, renderApptainer,
+      renderMySQL, renderMongoDB, renderPython, renderJulia,
+      renderNodeJS, renderSpack, renderNVIDIA, renderCRAN, renderBioconductor
+    ].forEach(function(fn) { try { fn(); } catch (err) { console.error(fn.name, err); } });
+
+    fillOsSelects();
+    applyAdaptiveRenders();
+
+    var search = document.getElementById("navSearch");
+    if (search) {
+      search.addEventListener("input", function() { filterNav(search.value); });
+      document.addEventListener("keydown", function(e) {
+        var tag = (e.target && e.target.tagName || "").toLowerCase();
+        if (e.key === "/" && tag !== "input" && tag !== "textarea" && tag !== "select") {
+          e.preventDefault();
+          search.focus();
+          search.select();
+        } else if (e.key === "Escape" && document.activeElement === search) {
+          search.value = "";
+          filterNav("");
+          search.blur();
+        }
+      });
+    }
+
+    var hash = location.hash.replace(/^#/, "");
+    if (hash && document.getElementById("panel-" + hash)) switchSource(hash);
+    else {
+      var cur = document.querySelector(".nav a.active");
+      if (cur) pushRecent(cur.dataset.source);
+    }
+  </script>
+  <script src="page-transition.js?v=3" defer></script>
+</body>
+</html>

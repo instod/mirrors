@@ -1,0 +1,158 @@
+/* =========================================================
+   Cross-page transitions (index / doc / soft)
+   Chromium: MPA View Transitions · else: brand veil fallback
+   ========================================================= */
+
+:root {
+  --pt-page: #f3f7fc;
+  --pt-ink: #002a4a;
+  --pt-mid: #00529b;
+  --pt-ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --pt-ease-in: cubic-bezier(0.16, 1, 0.3, 1);
+  --pt-ease-std: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  background-color: var(--pt-page);
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(root) {
+  animation-duration: 260ms;
+  animation-timing-function: var(--pt-ease-std);
+}
+
+::view-transition-old(root) {
+  animation: pt-vt-out 200ms var(--pt-ease-out) both;
+}
+
+::view-transition-new(root) {
+  animation: pt-vt-in 260ms var(--pt-ease-in) both;
+}
+
+@keyframes pt-vt-out {
+  to {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes pt-vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+}
+
+/* Boot: cover white flash before CSS/JS hydrate (fallback path) */
+html.pt-boot {
+  background: var(--pt-ink);
+}
+
+html.pt-boot body {
+  opacity: 0 !important;
+}
+
+/* ---------- Fallback veil ---------- */
+#pt-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(65, 150, 230, 0.28), transparent 55%),
+    linear-gradient(155deg, #002a4a 0%, #00529b 52%, #003f6a 100%);
+  will-change: opacity;
+}
+
+body.pt-exit {
+  animation: pt-body-out 200ms var(--pt-ease-out) forwards;
+}
+
+body.pt-exit #pt-veil {
+  animation: pt-veil-in 200ms var(--pt-ease-out) forwards;
+}
+
+body.pt-enter {
+  animation: pt-body-in 280ms var(--pt-ease-in) both;
+}
+
+body.pt-enter #pt-veil {
+  animation: pt-veil-out 280ms var(--pt-ease-in) forwards;
+}
+
+html.pt-dir-back body.pt-exit {
+  animation-name: pt-body-out-back;
+}
+html.pt-dir-back body.pt-enter {
+  animation-name: pt-body-in-back;
+}
+
+@keyframes pt-veil-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes pt-veil-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes pt-body-out {
+  to {
+    opacity: 0.6;
+    transform: translateX(-6px);
+  }
+}
+
+@keyframes pt-body-out-back {
+  to {
+    opacity: 0.6;
+    transform: translateX(6px);
+  }
+}
+
+@keyframes pt-body-in {
+  from {
+    opacity: 0.9;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pt-body-in-back {
+  from {
+    opacity: 0.9;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  body.pt-exit,
+  body.pt-enter,
+  body.pt-exit #pt-veil,
+  body.pt-enter #pt-veil {
+    animation: none !important;
+  }
+
+  html.pt-boot body {
+    opacity: 1 !important;
+  }
+}

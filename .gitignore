@@ -1,0 +1,20 @@
+# runtime / cache
+__pycache__/
+*.py[cod]
+*.log
+
+# backups / one-off dumps
+*.bak
+*.bak.*
+data/resume_queue_bak_*
+data/_hidden_placeholders_*.json
+data/update_descriptions.sql
+
+# local tooling
+.claude/
+.DS_Store
+*.swp
+*~
+
+# empty placeholder
+deploy/mirrors.db

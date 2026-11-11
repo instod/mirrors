@@ -1,0 +1,189 @@
+[
+  {
+    "id": "nju",
+    "name": "南京大学 NJU",
+    "host": "mirror.nju.edu.cn",
+    "protocol": "rsync/https",
+    "url": "https://mirror.nju.edu.cn/",
+    "source": "https://mirror.nju.edu.cn/ · rsync://mirror.nju.edu.cn/",
+    "category": "国内镜像",
+    "note": "操作系统 / 语言包 / conda / CRAN / Bioconductor 等主同步源",
+    "enabled": true
+  },
+  {
+    "id": "aliyun",
+    "name": "阿里云开源镜像站",
+    "host": "mirrors.aliyun.com",
+    "protocol": "https",
+    "url": "https://mirrors.aliyun.com/",
+    "source": "https://mirrors.aliyun.com/",
+    "category": "国内镜像",
+    "note": "MySQL 等软件源",
+    "enabled": true
+  },
+  {
+    "id": "almalinux",
+    "name": "AlmaLinux Official",
+    "host": "rsync.repo.almalinux.org",
+    "protocol": "rsync",
+    "url": "https://repo.almalinux.org/",
+    "source": "rsync://rsync.repo.almalinux.org/",
+    "category": "发行版官方",
+    "note": "almalinux / elevate / kitten",
+    "enabled": true
+  },
+  {
+    "id": "ebi",
+    "name": "EBI FTP",
+    "host": "ftp.ebi.ac.uk",
+    "protocol": "ftp",
+    "url": "https://ftp.ebi.ac.uk/",
+    "source": "ftp://ftp.ebi.ac.uk/",
+    "category": "生信数据库",
+    "note": "EBI / UniProt / Pfam / InterPro / PDB 等",
+    "enabled": true
+  },
+  {
+    "id": "ncbi",
+    "name": "NCBI FTP",
+    "host": "ftp.ncbi.nlm.nih.gov",
+    "protocol": "ftp",
+    "url": "https://ftp.ncbi.nlm.nih.gov/",
+    "source": "ftp://ftp.ncbi.nlm.nih.gov/",
+    "category": "生信数据库",
+    "note": "NCBI / PMC",
+    "enabled": true
+  },
+  {
+    "id": "ensembl",
+    "name": "Ensembl FTP",
+    "host": "ftp.ensembl.org",
+    "protocol": "ftp",
+    "url": "https://ftp.ensembl.org/",
+    "source": "ftp://ftp.ensembl.org/",
+    "category": "生信数据库",
+    "note": "Ensembl 基因组数据",
+    "enabled": true
+  },
+  {
+    "id": "ensembl_genomes",
+    "name": "Ensembl Genomes",
+    "host": "ftp.ensemblgenomes.org",
+    "protocol": "ftp/rsync",
+    "url": "https://ftp.ensemblgenomes.org/",
+    "source": "ftp://ftp.ensemblgenomes.org/ · rsync://ftp.ensemblgenomes.org/all/",
+    "category": "生信数据库",
+    "note": "Ensembl Genomes",
+    "enabled": true
+  },
+  {
+    "id": "ddbj",
+    "name": "DDBJ FTP",
+    "host": "ftp.ddbj.nig.ac.jp",
+    "protocol": "ftp",
+    "url": "https://ftp.ddbj.nig.ac.jp/",
+    "source": "ftp://ftp.ddbj.nig.ac.jp/",
+    "category": "生信数据库",
+    "note": "日本 DNA 数据银行",
+    "enabled": true
+  },
+  {
+    "id": "expasy",
+    "name": "ExPASy / PROSITE",
+    "host": "ftp.expasy.org",
+    "protocol": "rsync",
+    "url": "https://ftp.expasy.org/",
+    "source": "rsync://ftp.expasy.org/databases/prosite/",
+    "category": "生信数据库",
+    "note": "PROSITE",
+    "enabled": true
+  },
+  {
+    "id": "rhea",
+    "name": "Rhea DB",
+    "host": "ftp.expasy.org",
+    "protocol": "ftp",
+    "url": "https://ftp.expasy.org/databases/rhea/",
+    "source": "ftp://ftp.expasy.org/databases/rhea/",
+    "category": "生信数据库",
+    "note": "酶反应库；同步走 FTP（HTTPS 索引会污染 lftp/wget）",
+    "enabled": true
+  },
+  {
+    "id": "uniprot_rsync",
+    "name": "UniProt Rsync",
+    "host": "rsync.uniprot.org",
+    "protocol": "rsync",
+    "url": "https://www.uniprot.org/",
+    "source": "rsync://rsync.uniprot.org/uniprot/",
+    "category": "生信数据库",
+    "note": "UniProt（脚本侧亦可能走 EBI FTP）",
+    "enabled": true
+  },
+  {
+    "id": "wwpdb",
+    "name": "wwPDB / RCSB",
+    "host": "files.wwpdb.org",
+    "protocol": "https",
+    "url": "https://files.wwpdb.org/",
+    "source": "https://files.wwpdb.org/pub/pdb/",
+    "category": "生信数据库",
+    "note": "蛋白质结构数据",
+    "enabled": true
+  },
+  {
+    "id": "alphafold",
+    "name": "AlphaFold EBI",
+    "host": "alphafold.ebi.ac.uk",
+    "protocol": "https",
+    "url": "https://alphafold.ebi.ac.uk/",
+    "source": "https://alphafold.ebi.ac.uk/files/",
+    "category": "生信数据库",
+    "note": "AlphaFold 预测结构",
+    "enabled": true
+  },
+  {
+    "id": "gtdb",
+    "name": "GTDB",
+    "host": "data.gtdb.ecogenomic.org",
+    "protocol": "https",
+    "url": "https://data.gtdb.ecogenomic.org/",
+    "source": "https://data.gtdb.ecogenomic.org/releases",
+    "category": "生信数据库",
+    "note": "基因组分类数据库",
+    "enabled": true
+  },
+  {
+    "id": "nvidia",
+    "name": "NVIDIA CUDA 中国站",
+    "host": "developer.download.nvidia.cn",
+    "protocol": "https",
+    "url": "https://developer.download.nvidia.cn/",
+    "source": "https://developer.download.nvidia.cn/compute/cuda/repos/",
+    "category": "厂商软件源",
+    "note": "CUDA / NVIDIA 仓库",
+    "enabled": true
+  },
+  {
+    "id": "github",
+    "name": "GitHub Releases",
+    "host": "github.com",
+    "protocol": "https",
+    "url": "https://github.com/",
+    "source": "https://github.com/ · https://api.github.com/",
+    "category": "厂商软件源",
+    "note": "Apptainer / Spack 发行版",
+    "enabled": true
+  },
+  {
+    "id": "openhpc",
+    "name": "OpenHPC",
+    "host": "repos.openhpc.net",
+    "protocol": "http",
+    "url": "http://repos.openhpc.net/",
+    "source": "http://repos.openhpc.net/OpenHPC/",
+    "category": "厂商软件源",
+    "note": "历史源，外网可能不可达",
+    "enabled": true
+  }
+]

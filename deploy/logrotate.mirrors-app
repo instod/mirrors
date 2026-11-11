@@ -1,0 +1,10 @@
+/hpcfs/fhome/baiwx/mirrors/app.log {
+    daily
+    rotate 30
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+    create 0644 root root
+}

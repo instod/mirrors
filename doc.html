@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>使用指南 · 中国科学院天津工业生物技术研究所数据镜像站</title>
+  <link rel="stylesheet" href="page-transition.css?v=3" />
+  <script>(function(){try{var r=sessionStorage.getItem("pt-nav");if(!r)return;var m=r.charAt(0)==="{"?JSON.parse(r).mode:r;if(m==="1"||m==="veil")document.documentElement.classList.add("pt-boot");}catch(e){}})();</script>
+  <style>
+    /* 内网镜像站：不用 Google Fonts @import，避免外网不可达拖慢首屏 */
+    :root {
+      --brand-900: #002a4a;
+      --brand-800: #003f6a;
+      --brand-700: #00529b;
+      --brand-600: #005fb6;
+      --brand-500: #1f78d1;
+      --brand-400: #4196e6;
+      --brand-300: #7aabe8;
+      --brand-200: #b8d4f3;
+      --brand-100: #eaf3ff;
+      --brand-50: #f6fbff;
+      --primary-color: var(--brand-700);
+      --page-bg: #f3f7fc;
+      --surface: #ffffff;
+      --surface-soft: #f7faff;
+      --surface-2: #fafcff;
+      --border: #e2ebf6;
+      --border-soft: #eef3fa;
+      --text-color: #0c1b2c;
+      --text-soft: #2c3a4f;
+      --muted: #5b6b82;
+      --muted-2: #94a3b8;
+      --success: #0f7a3a;
+      --success-bg: #f0fdf4;
+      --success-border: #bbf7d0;
+      --warning: #a8540a;
+      --warning-bg: #fffaf0;
+      --warning-border: #fde4b8;
+      --danger: #b11919;
+      --danger-bg: #fef5f5;
+      --danger-border: #fecaca;
+      --info: #1750c2;
+      --info-bg: #f1f6ff;
+      --info-border: #c7d9f8;
+      --shadow-1: 0 1px 2px rgba(15, 38, 84, 0.04), 0 6px 18px rgba(15, 38, 84, 0.05);
+      --shadow-2: 0 2px 4px rgba(15, 38, 84, 0.04), 0 16px 36px rgba(15, 38, 84, 0.08);
+      --shadow-3: 0 4px 8px rgba(15, 38, 84, 0.05), 0 24px 60px rgba(15, 38, 84, 0.12);
+      --radius-xl: 20px;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-sm: 8px;
+      --font-sans: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", "Helvetica Neue", "Hiragino Sans GB", "Segoe UI", Arial, sans-serif;
+      --font-display: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", "Helvetica Neue", "Hiragino Sans GB", "Segoe UI", Arial, sans-serif;
+      --font-mono: "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code", Consolas, "Source Code Pro", Monaco, monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      font-feature-settings: "tnum" 1, "cv11" 1, "ss01" 1, "kern" 1;
+      font-synthesis: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      background:
+        radial-gradient(1200px 600px at 50% -160px, rgba(31, 120, 209, 0.16), transparent 60%),
+        radial-gradient(1000px 600px at 90% 20%, rgba(122, 171, 232, 0.08), transparent 60%),
+        linear-gradient(180deg, #edf3fb 0%, #f8fbff 35%, #edf3fb 100%);
+      background-attachment: fixed;
+      color: var(--text-color);
+      padding: 8.8rem 0 3rem 0;
+      min-height: 100vh;
+      line-height: 1.85;
+      font-size: 15px;
+      letter-spacing: 0.015em;
+    }
+
+    /* ========== Header ========== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 95%;
+      max-width: 1700px;
+      height: 124px;
+      background:
+        linear-gradient(135deg, var(--brand-900) 0%, var(--brand-700) 60%, var(--brand-800) 100%);
+      padding: 0 2.2rem;
+      border-radius: 0 0 20px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.4rem;
+      box-shadow:
+        0 20px 50px rgba(0, 42, 74, 0.40),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      z-index: 9999;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 88% 50%, rgba(255, 255, 255, 0.18), transparent 45%),
+        radial-gradient(circle at 12% 100%, rgba(65, 150, 230, 0.20), transparent 50%);
+      pointer-events: none;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      pointer-events: none;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+      min-width: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    header img.logo {
+      height: 82px;
+      width: auto;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.30));
+    }
+
+    .header-titles { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+
+    .header-titles h1 {
+      color: #fff;
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      white-space: nowrap;
+      font-family: var(--font-display);
+    }
+
+    .header-titles .header-sub {
+      color: rgba(220, 235, 255, 0.92);
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-family: var(--font-sans);
+    }
+
+    .header-nav { display: flex; align-items: center; gap: 10px; position: relative; z-index: 1; }
+
+    .header-nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 18px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      border-radius: 999px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(8px);
+      letter-spacing: 0.02em;
+    }
+
+    .header-nav a:hover {
+      background: #fff;
+      color: var(--brand-800);
+      border-color: transparent;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.20);
+      transform: translateY(-1px);
+    }
+
+    .header-nav a svg { width: 14px; height: 14px; }
+
+    .container { width: 95%; max-width: 1700px; margin: 0 auto; padding: 0 2rem; }
+    .layout { display: grid; grid-template-columns: 290px 1fr; gap: 24px; align-items: start; }
+
+    /* ========== Sidebar Nav ========== */
+    .nav {
+      position: sticky;
+      top: 8.8rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-1);
+      overflow: hidden;
+      max-height: calc(100vh - 9.2rem);
+      overflow-y: auto;
+    }
+
+    .nav::-webkit-scrollbar { width: 6px; }
+    .nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    .nav::-webkit-scrollbar-track { background: transparent; }
+
+    .nav-header {
+      padding: 18px 22px 16px;
+      background:
+        linear-gradient(135deg, var(--brand-100) 0%, rgba(234, 243, 255, 0.5) 100%);
+      border-bottom: 1px solid var(--border-soft);
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      position: relative;
+    }
+
+    .nav-header::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 22px;
+      right: 22px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--brand-200), transparent);
+    }
+
+    .nav-header svg {
+      width: 16px;
+      height: 16px;
+      color: var(--brand-700);
+    }
+
+    .nav-header span {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--brand-800);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-family: var(--font-sans);
+    }
+
+    .nav-group { padding: 6px 0 10px; }
+    .nav-group + .nav-group { border-top: 1px solid var(--border-soft); }
+
+    .nav-group-title {
+      padding: 12px 22px 6px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--muted-2);
+      text-transform: uppercase;
+      font-family: var(--font-sans);
+    }
+
+    .nav a {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 10px 22px 10px 19px;
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.87rem;
+      font-weight: 500;
+      border-left: 3px solid transparent;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      letter-spacing: 0.02em;
+    }
+
+    .nav a .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--brand-300);
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .nav a:hover {
+      background: var(--surface-soft);
+      color: var(--brand-700);
+      border-left-color: var(--brand-300);
+    }
+
+    .nav a:hover .dot { background: var(--brand-500); transform: scale(1.3); }
+
+    .nav a.active {
+      background: linear-gradient(90deg, var(--brand-100) 0%, transparent 100%);
+      color: var(--brand-800);
+      font-weight: 700;
+      border-left-color: var(--brand-700);
+    }
+
+    .nav a.active .dot { background: var(--brand-700); transform: scale(1.4); }
+
+    /* ========== Content ========== */
+    .content {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-1);
+      padding: 48px 52px;
+      min-height: 600px;
+      position: relative;
+    }
+
+    .section { display: none; animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .section.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section a {
+      color: var(--brand-700);
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(0, 95, 182, 0.25);
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .section a:hover {
+      color: var(--brand-900);
+      border-bottom-color: var(--brand-700);
+    }
+
+    /* ========== Headings ========== */
+    .section h1 {
+      font-size: 1.95rem;
+      font-weight: 700;
+      color: var(--brand-900);
+      margin-bottom: 14px;
+      letter-spacing: 0.01em;
+      font-family: var(--font-display);
+      position: relative;
+      padding-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .section h1::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 56px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--brand-700), var(--brand-400));
+      border-radius: 2px;
+    }
+
+    .section .lead {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-soft);
+      line-height: 1.9;
+      letter-spacing: 0.02em;
+      max-width: 820px;
+    }
+
+    .section h2 {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--brand-800);
+      margin: 38px 0 14px;
+      padding-left: 16px;
+      border-left: 4px solid var(--brand-500);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      letter-spacing: 0.015em;
+      line-height: 1.5;
+    }
+
+    .section h2 .h-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 24px;
+      height: 24px;
+      padding: 0 9px;
+      background: linear-gradient(135deg, var(--brand-700), var(--brand-500));
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      box-shadow: 0 2px 6px rgba(31, 120, 209, 0.30);
+      letter-spacing: 0.02em;
+    }
+
+    .section h3 {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--brand-700);
+      margin: 24px 0 10px;
+      font-family: var(--font-display);
+      letter-spacing: 0.02em;
+      line-height: 1.5;
+    }
+
+    .section p {
+      color: var(--text-soft);
+      margin-bottom: 14px;
+      font-size: 0.94rem;
+      line-height: 1.95;
+      letter-spacing: 0.015em;
+    }
+
+    .section ul, .section ol { padding-left: 26px; margin-bottom: 18px; }
+    .section li {
+      margin-bottom: 8px;
+      color: var(--text-soft);
+      font-size: 0.94rem;
+      line-height: 1.95;
+      padding-left: 4px;
+      letter-spacing: 0.015em;
+    }
+    .section li::marker { color: var(--brand-500); font-weight: 700; }
+    .section li strong { color: var(--brand-800); font-weight: 700; }
+    .section p code, .section li code {
+      background: var(--brand-100);
+      color: var(--brand-700);
+      padding: 2px 8px;
+      border-radius: 5px;
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      border: 1px solid rgba(0, 95, 182, 0.12);
+      letter-spacing: 0;
+      font-weight: 500;
+    }
+
+    /* ========== Callouts ========== */
+    .callout {
+      display: flex;
+      gap: 16px;
+      padding: 18px 22px;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      margin: 20px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .callout::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+    }
+
+    .callout-icon {
+      flex-shrink: 0;
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    .callout-icon svg { width: 18px; height: 18px; }
+    .callout-body { flex: 1; min-width: 0; }
+    .callout-body strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.93rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .callout-body p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.85;
+      letter-spacing: 0.015em;
+    }
+
+    .callout.tip { background: var(--info-bg); border-color: var(--info-border); }
+    .callout.tip::before { background: var(--info); }
+    .callout.tip .callout-icon { background: #fff; color: var(--info); }
+    .callout.tip strong { color: var(--info); }
+
+    .callout.warn { background: var(--warning-bg); border-color: var(--warning-border); }
+    .callout.warn::before { background: var(--warning); }
+    .callout.warn .callout-icon { background: #fff; color: var(--warning); }
+    .callout.warn strong { color: var(--warning); }
+
+    .callout.danger { background: var(--danger-bg); border-color: var(--danger-border); }
+    .callout.danger::before { background: var(--danger); }
+    .callout.danger .callout-icon { background: #fff; color: var(--danger); }
+    .callout.danger strong { color: var(--danger); }
+
+    .callout.success { background: var(--success-bg); border-color: var(--success-border); }
+    .callout.success::before { background: var(--success); }
+    .callout.success .callout-icon { background: #fff; color: var(--success); }
+    .callout.success strong { color: var(--success); }
+
+    /* ========== Code Block ========== */
+    .code-block {
+      position: relative;
+      margin: 20px 0 24px;
+      background: linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+      color: #1e293b;
+      border-radius: 12px;
+      padding: 38px 24px 22px;
+      overflow-x: auto;
+      font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code", "Source Code Pro", "Consolas", "Menlo", monospace;
+      font-size: 0.86rem;
+      line-height: 1.9;
+      font-feature-settings: "calt" 0, "liga" 0;
+      box-shadow:
+        0 1px 2px rgba(15, 38, 84, 0.04),
+        0 8px 24px rgba(15, 38, 84, 0.06);
+      border: 1px solid var(--border);
+    }
+
+    /* Mac 风格窗口按钮 */
+    .code-block::before {
+      content: "";
+      position: absolute;
+      top: 14px;
+      left: 18px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ff5f57;
+      box-shadow:
+        20px 0 0 #febc2e,
+        40px 0 0 #28c840;
+    }
+
+    .code-block .lang {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--brand-700);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 2px 12px;
+      background: var(--brand-50);
+      border: 1px solid var(--brand-200);
+      border-radius: 999px;
+      font-family: var(--font-sans);
+      line-height: 1.5;
+    }
+
+    .code-block code {
+      display: block;
+      white-space: pre;
+      color: #1e293b;
+      letter-spacing: 0;
+    }
+
+    .code-block .c-comment { color: #94a3b8; font-style: italic; }
+    .code-block .c-cmd { color: var(--brand-700); font-weight: 600; }
+    .code-block .c-flag { color: #b45309; font-weight: 500; }
+    .code-block .c-str { color: #0f7a3a; }
+    .code-block .c-path { color: #7c3aed; font-weight: 500; }
+    .code-block .c-tree { color: #475569; }
+    .code-block .c-dir { color: var(--brand-600); font-weight: 500; }
+
+    /* 代码块滚动条 */
+    .code-block::-webkit-scrollbar { height: 8px; }
+    .code-block::-webkit-scrollbar-track { background: transparent; }
+    .code-block::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    .code-block::-webkit-scrollbar-thumb:hover { background: var(--brand-200); }
+
+    /* ========== Feature Grid ========== */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+      margin: 24px 0 28px;
+    }
+
+    .feature-card {
+      padding: 20px 22px;
+      background: var(--surface);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--brand-400), var(--brand-700));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--brand-200);
+      box-shadow: 0 16px 32px rgba(0, 95, 182, 0.10);
+    }
+
+    .feature-card:hover::before { transform: scaleX(1); }
+
+    .feature-card .feat-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--brand-100), #d6e8fb);
+      color: var(--brand-700);
+      margin-bottom: 12px;
+      box-shadow: inset 0 0 0 1px rgba(0, 95, 182, 0.08);
+    }
+
+    .feature-card .feat-icon svg { width: 18px; height: 18px; }
+
+    .feature-card h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--brand-800);
+      margin-bottom: 6px;
+      letter-spacing: 0.02em;
+      font-family: var(--font-display);
+    }
+
+    .feature-card p {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.75;
+      letter-spacing: 0.01em;
+    }
+
+    /* ========== Param Table ========== */
+    .param-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 16px 0 22px;
+      font-size: 0.9rem;
+      background: var(--surface);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .param-table thead { background: linear-gradient(180deg, #f4f9ff, #eaf3ff); }
+
+    .param-table th {
+      padding: 13px 16px;
+      text-align: left;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--brand-800);
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-family: var(--font-sans);
+    }
+
+    .param-table td {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--border-soft);
+      color: var(--text-soft);
+      vertical-align: top;
+      line-height: 1.8;
+      letter-spacing: 0.01em;
+    }
+
+    .param-table tr:last-child td { border-bottom: none; }
+    .param-table tr:hover td { background: var(--surface-soft); }
+
+    .param-table code {
+      background: var(--brand-100);
+      color: var(--brand-700);
+      padding: 2px 8px;
+      border-radius: 5px;
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+      border: 1px solid rgba(0, 95, 182, 0.10);
+      font-weight: 500;
+    }
+
+    /* ========== FAQ ========== */
+    .faq-item {
+      margin-bottom: 12px;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--surface);
+      transition: border-color 0.2s ease;
+    }
+
+    .faq-item:hover { border-color: var(--brand-200); }
+    .faq-item.open { border-color: var(--brand-300); box-shadow: var(--shadow-1); }
+
+    .faq-q {
+      padding: 17px 22px;
+      font-weight: 600;
+      color: var(--brand-800);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--surface-soft);
+      transition: background 0.2s ease;
+      font-size: 0.93rem;
+      letter-spacing: 0.015em;
+      line-height: 1.6;
+    }
+
+    .faq-q:hover { background: var(--brand-50); }
+
+    .faq-q::after {
+      content: "+";
+      color: var(--brand-500);
+      font-size: 1.25rem;
+      font-weight: 400;
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .faq-item.open .faq-q::after {
+      content: "−";
+      color: #fff;
+      background: var(--brand-700);
+      border-color: var(--brand-700);
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+      padding: 0 22px;
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 800px;
+      padding: 18px 22px;
+      border-top: 1px solid var(--border-soft);
+    }
+
+    .faq-a p {
+      margin-bottom: 9px;
+      font-size: 0.9rem;
+      line-height: 1.9;
+      letter-spacing: 0.015em;
+    }
+
+    .faq-a p:last-child { margin-bottom: 0; }
+
+    /* ========== Footer ========== */
+    .doc-footer {
+      max-width: 1700px;
+      margin: 1.4rem auto 0;
+      padding: 22px 28px;
+      background: var(--surface);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-1);
+      text-align: center;
+    }
+
+    .doc-footer p {
+      color: var(--muted);
+      font-size: 0.86rem;
+      letter-spacing: 0.025em;
+    }
+
+    .doc-footer .footer-tech {
+      margin-top: 6px;
+      color: var(--muted-2);
+      font-size: 0.76rem;
+      letter-spacing: 0.14em;
+    }
+
+    /* ========== Responsive ========== */
+    @media (max-width: 1024px) {
+      .layout { grid-template-columns: 240px 1fr; }
+      .container { padding: 0 1rem; }
+      header { height: 108px; padding: 0 1.25rem; }
+      header img.logo { height: 68px; }
+      .header-titles h1 { font-size: 1.4rem; }
+      .content { padding: 36px 32px; }
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 7.8rem 0 2rem; }
+      header { width: 100%; left: 0; transform: none; border-radius: 0 0 20px 20px; }
+      .header-titles h1 { font-size: 1.15rem; }
+      .header-titles .header-sub { font-size: 0.7rem; }
+      .layout { grid-template-columns: 1fr; }
+      .nav { position: relative; top: 0; max-height: none; }
+      .content { padding: 24px 20px; }
+      .section h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-brand">
+      <img src="logo.png" alt="中科院Logo" class="logo" />
+      <div class="header-titles">
+        <h1>镜像站使用指南</h1>
+        <span class="header-sub">TIB Mirrors · Documentation</span>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <a href="soft.html" title="Conda / PyPI 软件源配置方法">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 17l6-6-6-6"></path>
+          <path d="M12 19h8"></path>
+        </svg>
+        软件源配置
+      </a>
+      <a href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7"></path>
+        </svg>
+        返回首页
+      </a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="layout">
+      <nav class="nav" aria-label="使用指南目录">
+        <div class="nav-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span>目录</span>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">快速开始</div>
+          <a href="#" data-target="welcome" class="active"><span class="dot"></span>欢迎</a>
+          <a href="#" data-target="quickstart"><span class="dot"></span>三步上手</a>
+          <a href="#" data-target="tree"><span class="dot"></span>目录结构</a>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">HPC 用户</div>
+          <a href="#" data-target="hpc-direct"><span class="dot"></span>直访公共目录</a>
+          <a href="#" data-target="hpc-search"><span class="dot"></span>搜索与定位</a>
+          <a href="#" data-target="hpc-copy"><span class="dot"></span>复制到个人目录</a>
+          <a href="#" data-target="hpc-slurm"><span class="dot"></span>Slurm 作业访问</a>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">普通用户</div>
+          <a href="#" data-target="web-download"><span class="dot"></span>网页下载</a>
+          <a href="#" data-target="wget"><span class="dot"></span>wget / curl</a>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">参考</div>
+          <a href="#" data-target="best-practice"><span class="dot"></span>性能与建议</a>
+          <a href="#" data-target="faq"><span class="dot"></span>常见问题 FAQ</a>
+          <a href="#" data-target="contact"><span class="dot"></span>联系方式</a>
+        </div>
+      </nav>
+
+      <main class="content">
+        <section class="section active" id="welcome">
+          <h1>欢迎使用镜像站</h1>
+          <p class="lead">按您的身份选择左侧章节：超算平台用户优先直读公共目录；其他用户通过 HTTPS 浏览与下载。</p>
+
+          <div class="feature-grid">
+            <div class="feature-card">
+              <div class="feat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                  <path d="M3 5v6c0 1.7 4 3 9 3s9-1.3 9-3V5"></path>
+                  <path d="M3 11v6c0 1.7 4 3 9 3s9-1.3 9-3v-6"></path>
+                </svg>
+              </div>
+              <h4>组学数据库</h4>
+              <p>NCBI、NCBI Open Data（SRA / BLAST DB / PMC OA）、Ensembl、UniProt、PDB 等</p>
+            </div>
+            <div class="feature-card">
+              <div class="feat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <path d="M8 21h8M12 17v4"></path>
+                </svg>
+              </div>
+              <h4>系统与应用源</h4>
+              <p>OS 镜像、Conda / Pip 等软件源</p>
+            </div>
+            <div class="feature-card">
+              <div class="feat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                </svg>
+              </div>
+              <h4>高速直连</h4>
+              <p>所内高速访问；所外取决于您的网络环境</p>
+            </div>
+            <div class="feature-card">
+              <div class="feat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <h4>合规可用</h4>
+              <p>仅供科研教学，请合理使用</p>
+            </div>
+          </div>
+
+          <div class="callout tip">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>如何选择章节？</strong>
+              <p>研究所超算平台用户请看「HPC 用户」；通过所内网或经授权远程访问的用户请看「普通用户」。</p>
+            </div>
+          </div>
+
+          <div class="callout warn">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <path d="M12 9v4M12 17h.01"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>合理使用政策</strong>
+              <p>本镜像站资源仅供科研、教学及个人学习使用，请勿用于商业目的。请避免使用多线程下载工具并发下载，以免对服务器造成过大压力。</p>
+            </div>
+          </div>
+
+          <div class="callout danger">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M4.93 4.93l14.14 14.14"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>禁止滥用与攻击行为</strong>
+              <p>禁止对站点或共享存储进行大规模扫描、未授权爬取与攻击行为；禁止传播违法违规内容。违规访问将被限制并按规定处理。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="quickstart">
+          <h1>三步上手</h1>
+          <p class="lead">无论您是哪种用户，整体流程都可以归纳为以下三步。</p>
+
+          <h2><span class="h-num">1</span>确认您的身份与访问路径</h2>
+          <p>HPC 用户优先直连公共目录；其他用户通过 HTTPS 下载：</p>
+          <div class="code-block">
+            <span class="lang">shell</span>
+            <code><span class="c-comment"># HPC 用户（推荐）</span>
+<span class="c-cmd">cd</span> /hpcfs/fpublic/database/         <span class="c-comment"># 只读公共目录，无需下载</span>
+
+<span class="c-comment"># 网页 / HTTPS 用户</span>
+<span class="c-cmd">wget</span> <span class="c-flag">-c</span> <span class="c-str">"https://mirrors.tibhpc.net/&lt;path&gt;"</span>  <span class="c-comment"># HTTPS 断点续传</span></code>
+          </div>
+
+          <h2><span class="h-num">2</span>找到您需要的资源</h2>
+          <p>两种方式都可以：</p>
+          <ul>
+            <li>在首页的「数据库镜像源 / 系统与应用源」表格里直接定位</li>
+            <li>命令行用 <code>find</code> 或 <code>ls</code> 在公共目录里查找</li>
+          </ul>
+          <div class="code-block">
+            <span class="lang">shell</span>
+            <code><span class="c-cmd">ls</span> /hpcfs/fpublic/database/                 <span class="c-comment"># 列出镜像源目录</span>
+<span class="c-cmd">find</span> /hpcfs/fpublic/database/ncbi <span class="c-flag">-name</span> <span class="c-str">"*.fna"</span> | <span class="c-cmd">head</span>  <span class="c-comment"># 在单个源内查找</span></code>
+          </div>
+
+          <h2><span class="h-num">3</span>取用数据</h2>
+          <ul>
+            <li><strong>HPC 用户</strong>：直接在公共目录中分析，或 <code>cp</code> 到个人目录</li>
+            <li><strong>网页用户</strong>：使用 <code>wget -c</code> 经 HTTPS 下载到本地，支持断点续传</li>
+          </ul>
+        </section>
+
+        <section class="section" id="tree">
+          <h1>公共目录结构</h1>
+          <p class="lead">数据库镜像位于只读公共目录。完整清单以首页为准；超算环境中可用 <code>ls</code> 查看本地挂载路径。</p>
+          <div class="code-block">
+            <span class="lang">tree</span>
+            <code><span class="c-path">/hpcfs/fpublic/database</span>          <span class="c-comment"># 只读</span>
+├── <span class="c-dir">ncbi</span>/ …                 <span class="c-comment"># FTP 全站</span>
+├── <span class="c-dir">ncbi-opendata</span>/ …       <span class="c-comment"># AWS：SRA / BLAST DB / PMC OA</span>
+├── <span class="c-dir">ensembl</span>/ …
+├── <span class="c-dir">uniprot</span>/ …
+├── <span class="c-dir">pdb-redo</span>/ …
+└── …                              <span class="c-comment"># 更多条目见首页</span></code>
+          </div>
+          <div class="callout tip">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>目录会随同步更新</strong>
+              <p>请以首页列表或 <code>ls /hpcfs/fpublic/database</code> 的实时结果为准，勿依赖本文示例穷举。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="hpc-direct">
+          <h1>直访公共目录（HPC 用户）</h1>
+          <p class="lead">最推荐的方式——不占用个人存储，数据始终保持最新。</p>
+
+          <h2><span class="h-num">1</span>进入公共目录</h2>
+          <div class="code-block">
+            <span class="lang">shell</span>
+            <code><span class="c-cmd">cd</span> /hpcfs/fpublic/database
+<span class="c-cmd">ls</span>                              <span class="c-comment"># 查看所有可用镜像源</span>
+<span class="c-cmd">cd</span> ncbi                        <span class="c-comment"># 进入 NCBI 数据目录</span></code>
+          </div>
+
+          <h2><span class="h-num">2</span>查看目录占用</h2>
+          <p>统计某个镜像源占用空间：</p>
+          <div class="code-block">
+            <span class="lang">shell</span>
+            <code><span class="c-cmd">du</span> <span class="c-flag">-sh</span> /hpcfs/fpublic/database/ncbi        <span class="c-comment"># 仅查单个子目录</span></code>
+          </div>
+          <div class="callout warn">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <path d="M12 9v4M12 17h.01"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>请勿对整库盲目 du</strong>
+              <p>对超大目录做 <code>du</code> / 全树 <code>find</code> 会长时间占用共享存储 IO。容量信息优先看首页表格；确需统计时请限定到具体子目录。</p>
+            </div>
+          </div>
+
+          <div class="callout success">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>推荐做法</strong>
+              <p>直接在公共目录跑分析（用 <code>--input</code> 等参数指向公共路径），可显著节省个人家目录的存储配额和 IO 等待时间。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="hpc-search">
+          <h1>搜索与定位（HPC 用户）</h1>
+          <p class="lead">目录层级较深时，命令行工具可以快速定位文件。</p>
+
+          <h2><span class="h-num">1</span>按文件名查找</h2>
+          <div class="code-block">
+            <span class="lang">shell</span>
+            <code><span class="c-cmd">find</span> /hpcfs/fpublic/database/ncbi <span class="c-flag">-name</span> <span class="c-str">"*.fna"</span> | <span class="c-cmd">head</span>      <span class="c-comment"># 在 ncbi 下找序列</span>
+<span class="c-cmd">find</span> /hpcfs/fpublic/database/ncbi <span class="c-flag">-iname</span> <span class="c-str">"*pdb*"</span> | <span class="c-cmd">head</span>   <span class="c-comment"># 限定子目录查找</span>
+<span class="c-cmd">find</span> /hpcfs/fpublic/database/kegg <span class="c-flag">-maxdepth</span> 2 <span class="c-flag">-type</span> f | <span class="c-cmd">wc</span> <span class="c-flag">-l</span>  <span class="c-comment"># 浅层统计</span></code>
+          </div>
+
+          <h2><span class="h-num">2</span>按文件大小查找</h2>
+          <div class="code-block">
+            <span class="lang">shell</span>
+            <code><span class="c-cmd">find</span> /hpcfs/fpublic/database/ncbi <span class="c-flag">-type</span> f <span class="c-flag">-size</span> +1G | <span class="c-cmd">head</span>   <span class="c-comment"># 限定到单个源</span>
+<span class="c-cmd">find</span> /hpcfs/fpublic/database/ncbi <span class="c-flag">-type</span> f <span class="c-flag">-size</span> +100M <span class="c-flag">-size</span> -1G | <span class="c-cmd">head</span></code>
+          </div>
+
+          <h2><span class="h-num">3</span>按修改时间查找</h2>
+          <div class="code-block">
+            <span class="lang">shell</span>
+            <code><span class="c-cmd">find</span> /hpcfs/fpublic/database/ncbi <span class="c-flag">-type</span> f <span class="c-flag">-mtime</span> <span class="c-flag">-7</span> | <span class="c-cmd">head</span>  <span class="c-comment"># 近 7 天更新</span></code>
+          </div>
+
+          <h2><span class="h-num">4</span>搜索建议</h2>
+          <p>优先用 <code>find</code> 限定路径与文件名模式；避免对整库做无过滤的全量扫描。</p>
+        </section>
+
+        <section class="section" id="hpc-copy">
+          <h1>复制到个人目录（HPC 用户）</h1>
+          <p class="lead">如果分析脚本必须使用本地路径，或需要长期保留某个快照，可将公共目录的数据复制到个人家目录。</p>
+
+          <h2><span class="h-num">1</span>单文件复制</h2>
+          <div class="code-block">
+            <span class="lang">shell</span>
+            <code><span class="c-cmd">cp</span> /hpcfs/fpublic/database/ncbi/file.txt /hpcfs/fhome/yourname/</code>
+          </div>
+
+          <h2><span class="h-num">2</span>整个目录复制</h2>
+          <div class="code-block">
+            <span class="lang">shell</span>
+            <code><span class="c-cmd">cp</span> <span class="c-flag">-r</span> /hpcfs/fpublic/database/ncbi/ /hpcfs/fhome/yourname/ncbi_copy/</code>
+          </div>
+
+          <div class="callout warn">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <path d="M12 9v4M12 17h.01"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>注意存储配额</strong>
+              <p>请勿整库复制超大镜像到家目录。优先在作业中直接引用公共路径；确需副本时只拷贝所需子集。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="hpc-slurm">
+          <h1>Slurm 作业访问（HPC 用户）</h1>
+          <p class="lead">在超算平台上，所有数据访问都应该通过作业调度系统，避免在登录节点执行重活。</p>
+
+          <h2><span class="h-num">1</span>提交批处理作业</h2>
+          <p>编写一个简单的作业脚本 <code>run.sh</code>：</p>
+          <div class="code-block">
+            <span class="lang">bash</span>
+            <code>#!/bin/bash
+#SBATCH <span class="c-flag">--job-name</span>=myrun
+#SBATCH <span class="c-flag">--partition</span>=cpu
+#SBATCH <span class="c-flag">--nodes</span>=1
+#SBATCH <span class="c-flag">--ntasks</span>=1
+#SBATCH <span class="c-flag">--cpus-per-task</span>=8
+#SBATCH <span class="c-flag">--mem</span>=32G
+#SBATCH <span class="c-flag">--time</span>=24:00:00
+#SBATCH <span class="c-flag">--output</span>=myrun_%j.log
+
+<span class="c-cmd">cd</span> /hpcfs/fhome/$USER/work
+<span class="c-cmd">./my_pipeline</span> <span class="c-flag">--input</span>=/hpcfs/fpublic/database/ncbi/genomes <span class="c-flag">--output</span>=./results</code>
+          </div>
+          <p>提交作业：</p>
+          <div class="code-block">
+            <span class="lang">shell</span>
+            <code><span class="c-cmd">sbatch</span> run.sh
+<span class="c-cmd">squeue</span> <span class="c-flag">-u</span> $USER            <span class="c-comment"># 查看作业状态</span>
+<span class="c-cmd">sacct</span> <span class="c-flag">-j</span> &lt;JOBID&gt; <span class="c-flag">--format</span>=JobID,State,Elapsed,MaxRSS  <span class="c-comment"># 历史资源使用</span></code>
+          </div>
+
+          <h2><span class="h-num">2</span>交互式调试</h2>
+          <p>需要交互式 shell 时申请计算节点：</p>
+          <div class="code-block">
+            <span class="lang">shell</span>
+            <code><span class="c-cmd">salloc</span> <span class="c-flag">--partition</span>=cpu <span class="c-flag">--cpus-per-task</span>=4 <span class="c-flag">--mem</span>=16G <span class="c-flag">--time</span>=02:00:00
+<span class="c-cmd">srun</span> <span class="c-flag">--pty</span> <span class="c-cmd">bash</span>           <span class="c-comment"># 在分配到的节点上打开 bash</span></code>
+          </div>
+
+          <h2><span class="h-num">3</span>常用 Slurm 命令</h2>
+          <table class="param-table">
+            <thead>
+              <tr><th>命令</th><th>作用</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>sinfo</code></td><td>查看分区与节点状态</td></tr>
+              <tr><td><code>squeue</code></td><td>查看排队/运行中作业</td></tr>
+              <tr><td><code>sbatch &lt;script&gt;</code></td><td>提交批处理作业</td></tr>
+              <tr><td><code>scancel &lt;jobid&gt;</code></td><td>取消作业</td></tr>
+              <tr><td><code>sacct</code></td><td>查看历史作业与资源</td></tr>
+              <tr><td><code>scontrol show job &lt;id&gt;</code></td><td>查看作业详细信息</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="section" id="web-download">
+          <h1>网页下载（普通用户）</h1>
+          <p class="lead">最简单的取用方式——直接通过浏览器打开首页，进入对应数据源页面下载。</p>
+          <ol>
+            <li>访问 <a href="index.html">镜像站首页</a></li>
+            <li>在「数据库镜像源」或「系统与应用源」列表中找到目标</li>
+            <li>点击数据源名称即可在浏览器中浏览/下载</li>
+          </ol>
+          <div class="callout tip">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>适用场景</strong>
+              <p>下载单个小文件（&lt; 1GB）或临时取用。下载大文件建议改用命令行工具 <code>wget -c</code>，避免浏览器断开。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="wget">
+          <h1>wget / curl（普通用户）</h1>
+          <p class="lead">最常用的命令行下载方式，支持断点续传、限速、批量等高级功能。</p>
+
+          <h2><span class="h-num">1</span>基础用法</h2>
+          <div class="code-block">
+            <span class="lang">shell</span>
+            <code><span class="c-cmd">wget</span> <span class="c-flag">-c</span> <span class="c-str">"https://mirrors.tibhpc.net/&lt;镜像路径&gt;"</span> <span class="c-flag">-O</span> outfile     <span class="c-comment"># wget 断点续传</span>
+
+<span class="c-cmd">curl</span> <span class="c-flag">-L</span> <span class="c-flag">-C</span> - <span class="c-flag">-o</span> outfile <span class="c-str">"https://mirrors.tibhpc.net/&lt;镜像路径&gt;"</span>  <span class="c-comment"># curl 等价写法</span></code>
+          </div>
+
+          <h2><span class="h-num">2</span>wget 常用参数</h2>
+          <table class="param-table">
+            <thead>
+              <tr><th>参数</th><th>作用</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>-c / --continue</code></td><td>断点续传，恢复中断的下载</td></tr>
+              <tr><td><code>-O FILE</code></td><td>指定下载后的文件名</td></tr>
+              <tr><td><code>-P DIR</code></td><td>指定文件下载到的目录</td></tr>
+              <tr><td><code>-b</code></td><td>后台运行下载进程</td></tr>
+              <tr><td><code>-q</code></td><td>静默模式（不输出进度）</td></tr>
+              <tr><td><code>-t N</code></td><td>重试次数（0 = 无限）</td></tr>
+              <tr><td><code>--limit-rate=100k</code></td><td>限速 100KB/s</td></tr>
+              <tr><td><code>-i list.txt</code></td><td>从文件读取 URL 列表批量下载</td></tr>
+            </tbody>
+          </table>
+
+          <h2><span class="h-num">3</span>批量下载</h2>
+          <p>把 URL 列表写入文件 <code>urls.txt</code>，一行一个：</p>
+          <div class="code-block">
+            <span class="lang">shell</span>
+            <code><span class="c-cmd">wget</span> <span class="c-flag">-c</span> <span class="c-flag">-i</span> urls.txt</code>
+          </div>
+        </section>
+
+        <section class="section" id="best-practice">
+          <h1>性能与建议</h1>
+          <p class="lead">遵循以下原则可以让您用得更舒心，也减少对镜像站的不必要压力。</p>
+
+          <h2><span class="h-num">1</span>选择合适的并发</h2>
+          <ul>
+            <li><strong>单文件下载</strong>：<code>wget -c</code> 单连接即可，多连接对 HTTP 镜像收益有限</li>
+            <li><strong>批量下载</strong>：建议 ≤ 4 路并发，避免触发站点限速</li>
+          </ul>
+
+          <h2><span class="h-num">2</span>HPC 用户优先</h2>
+          <p>如果您的使用场景是"读多写少"，请直接访问 <code>/hpcfs/fpublic/database</code>，避免下载冗余副本。</p>
+        </section>
+
+        <section class="section" id="faq">
+          <h1>常见问题 FAQ</h1>
+          <p class="lead">点击展开答案。</p>
+
+          <div class="faq-item">
+            <div class="faq-q">本站的下载速度如何？</div>
+            <div class="faq-a">
+              <p>所内用户：通常可获得较好的下载/直读体验。</p>
+              <p>远程用户：速度取决于您的接入网络，请避免过高并发。</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">下载文件的 MD5/SHA256 不符怎么办？</div>
+            <div class="faq-a">
+              <p>如果数据源当前处于"正在同步"状态，部分文件校验值临时不匹配是正常现象。请稍后再试，或在首页表格中查看该数据源的同步状态。</p>
+              <p>若长期校验失败，请通过研究所内部支持渠道反馈，并附上数据源名称与文件路径。</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">下载提示权限不足或获取数据为 0？</div>
+            <div class="faq-a">
+              <p>请先确认已接入研究所内网（或经授权的远程访问方式）。</p>
+              <p>若仍提示权限不足，请通过内部支持渠道联系运维协助核查。</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">镜像的数据是何时同步的？</div>
+            <div class="faq-a">
+              <p>各镜像按计划定期从上游更新。首页表格中的「上次同步时间」以相对时间展示（如「3 小时前」「2 天前」），鼠标悬停可查看精确时间戳；「下次同步」同样为相对时间（如「5 小时后」）。</p>
+              <p>若显示「暂无计划」，表示该源尚未启用定时同步。具体状态以首页表格为准。</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">数据能不能用商业用途？</div>
+            <div class="faq-a">
+              <p>不可以。本镜像站资源仅供科研、教学及个人学习使用，请遵守上游数据库的许可证条款。</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">想申请新增镜像源怎么办？</div>
+            <div class="faq-a">
+              <p>请通过研究所内部支持渠道提出申请，说明数据源名称、公开上游地址、预估体量与用途。是否纳入由运维评估后决定。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="contact">
+          <h1>联系方式与反馈</h1>
+          <p class="lead">资源缺失、同步异常或访问问题时，请走研究所内部支持流程。</p>
+
+          <div class="feature-grid">
+            <div class="feature-card">
+              <div class="feat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <path d="M22 6l-10 7L2 6"></path>
+                </svg>
+              </div>
+              <h4>联系方式</h4>
+              <p>请通过研究所内部 IT / 超算支持渠道联系镜像站运维。</p>
+            </div>
+            <div class="feature-card">
+              <div class="feat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path>
+                  <circle cx="12" cy="9" r="2.5"></circle>
+                </svg>
+              </div>
+              <h4>地址</h4>
+              <p>中国科学院天津工业生物技术研究所</p>
+            </div>
+            <div class="feature-card">
+              <div class="feat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 6v6l4 2"></path>
+                </svg>
+              </div>
+              <h4>响应时间</h4>
+              <p>工作日 1–2 个工作日内回复</p>
+            </div>
+          </div>
+
+          <div class="callout tip">
+            <div class="callout-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+            </div>
+            <div class="callout-body">
+              <strong>反馈建议</strong>
+              <p>发现数据缺失、文档错误或有新需求，欢迎通过内部支持渠道反馈。</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="doc-footer">
+      <p>© 2026 中国科学院天津工业生物技术研究所 · 数据镜像站 · 使用指南</p>
+      <p class="footer-tech">由 HPC 提供技术支持</p>
+    </div>
+  </div>
+
+  <script>
+    function setActiveSection(sectionId) {
+      document.querySelectorAll('.section').forEach(sec => {
+        sec.classList.toggle('active', sec.id === sectionId);
+      });
+      document.querySelectorAll('.nav a[data-target]').forEach(a => {
+        a.classList.toggle('active', a.dataset.target === sectionId);
+      });
+      // 滚动到内容区顶部
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('.nav a[data-target]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        setActiveSection(a.dataset.target);
+      });
+    });
+
+    // FAQ 折叠
+    document.querySelectorAll('.faq-q').forEach(q => {
+      q.addEventListener('click', () => {
+        q.parentElement.classList.toggle('open');
+      });
+    });
+
+    // 默认显示欢迎页
+    setActiveSection('welcome');
+  </script>
+  <script src="page-transition.js?v=3" defer></script>
+</body>
+</html>

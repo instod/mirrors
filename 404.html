@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>页面未找到 · TIB 数据镜像站</title>
+  <style>
+    :root {
+      --brand-900: #002a4a;
+      --brand-700: #00529b;
+      --brand-600: #005fb6;
+      --page-bg: #f3f7fc;
+      --text: #0c1b2c;
+      --muted: #5b6b82;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--page-bg);
+      color: var(--text);
+    }
+    .card {
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      padding: 40px 32px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid #e2ebf6;
+      box-shadow: 0 12px 40px rgba(0, 63, 106, 0.08);
+    }
+    .code {
+      font-size: 3.2rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      background: linear-gradient(135deg, var(--brand-900), var(--brand-600));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1.1;
+      margin: 0 0 12px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+    p {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    a.primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--brand-600), var(--brand-900));
+      box-shadow: 0 6px 18px rgba(0, 95, 182, 0.25);
+    }
+    a.secondary {
+      color: var(--brand-700);
+      background: #eaf3ff;
+      border: 1px solid #b8d4f3;
+    }
+    a:hover { transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="code">404</div>
+    <h1>页面未找到</h1>
+    <p>您访问的地址不存在或已移动。可返回镜像站首页，或查看使用指南与软件源配置。</p>
+    <div class="actions">
+      <a class="primary" href="/">返回首页</a>
+      <a class="secondary" href="/doc.html">使用指南</a>
+      <a class="secondary" href="/soft.html">软件源配置</a>
+    </div>
+  </div>
+</body>
+</html>

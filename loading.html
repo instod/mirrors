@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加载中</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --track: #E8EBF0;
+            --primary: #409EFF;
+            --primary-light: #7cb8ff;
+            --text: #2C3340;
+            --muted: #8a93a6;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f1419;
+                --track: #21262d;
+                --primary: #5ba0e0;
+                --primary-light: #82bcf0;
+                --text: #e6edf3;
+                --muted: #8b949e;
+            }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            background-color: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: background-color .3s ease;
+        }
+
+        /* 双层流光进度条 */
+        .progress-wrap {
+            width: 340px;
+            height: 6px;
+            background-color: var(--track);
+            border-radius: 999px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 24px;
+        }
+        .progress-bar-main {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: flowMain 1.8s ease-in-out infinite;
+        }
+        .progress-bar-shine {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
+            opacity: 0.6;
+            animation: flowShine 1.8s ease-in-out infinite;
+            animation-delay: 0.4s;
+        }
+        @keyframes flowMain {
+            0% { transform: translateX(-120%); }
+            100% { transform: translateX(120%); }
+        }
+        @keyframes flowShine {
+            0% { transform: translateX(-120%); }
+            100% { transform: translateX(120%); }
+        }
+
+        /* 醒目【正在加载中】标题 */
+        .load-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: 1px;
+            user-select: none;
+            animation: textBreath 2.5s ease-in-out infinite;
+            margin-bottom: 16px;
+        }
+        @keyframes textBreath {
+            0%, 100% { opacity: 0.82; }
+            50% { opacity: 1; }
+        }
+
+        /* 轮换展示科研标语 */
+        .loading-text {
+            font-size: 18px;
+            color: var(--muted);
+            text-align: center;
+            line-height: 1.65;
+            min-height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s ease;
+            user-select: none;
+        }
+
+        .loading-sub {
+            margin-top: 12px;
+            font-size: 14px;
+            color: var(--muted);
+            user-select: none;
+        }
+        .loading-tip {
+            margin-top: 40px;
+            font-size: 13px;
+            color: var(--muted);
+            display: none;
+            text-align: center;
+            max-width: 340px;
+            line-height: 1.7;
+        }
+        .loading-tip a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .loading-tip a:hover { text-decoration: underline; }
+        .loading-tip.show { display: block; }
+    </style>
+</head>
+<body>
+    <div class="progress-wrap">
+        <div class="progress-bar-main"></div>
+        <div class="progress-bar-shine"></div>
+    </div>
+
+    <!-- 固定醒目主标题 -->
+    <div class="load-title">正在加载中</div>
+    <!-- 随机轮换科研标语 -->
+    <div class="loading-text" id="loadText"></div>
+    <div class="loading-sub" id="loadSub"></div>
+    <div class="loading-tip" id="loadTip">
+        目录较大，加载时间较长。<br>
+        可<a id="retryLink" href="javascript:void(0)">重试</a>或<a id="backLink" href="javascript:void(0)">返回首页</a>。
+    </div>
+
+<script>
+    (function () {
+        const textDom = document.getElementById('loadText');
+        const subDom = document.getElementById('loadSub');
+        const tipDom = document.getElementById('loadTip');
+
+        const sloganList = [
+            "聚力算力底座，探索生命本原",
+            "夯实科研保障，驱动生物革新",
+            "护航基础研究，解锁生命密码",
+            "集聚科创势能，发展生命科学",
+            "筑牢科研支撑，勇攀生物高峰"
+        ];
+
+        let lastIndex = -1;
+        function getRandomSlogan() {
+            let idx;
+            do {
+                idx = Math.floor(Math.random() * sloganList.length);
+            } while (idx === lastIndex);
+            lastIndex = idx;
+            return sloganList[idx];
+        }
+        textDom.innerText = getRandomSlogan();
+        // 5秒切换标语
+        setInterval(() => {
+            textDom.innerText = getRandomSlogan();
+        }, 5000);
+
+        const params = new URLSearchParams(location.search);
+        const to = params.get('to');
+
+        // 防 open redirect：to 必须是站内路径(以单个 / 开头)，禁协议相对 // 与 javascript:/data: 等
+        const isSafeTo = to && to.startsWith('/') && !to.startsWith('//')
+            && !/^\s*(javascript|data|vbscript):/i.test(to);
+        if (!isSafeTo) {
+            textDom.innerText = to ? '参数非法' : '参数缺失';
+            subDom.textContent = '目标地址不合法，正在返回首页…';
+            setTimeout(() => { location.replace('/'); }, 1500);
+            return;
+        }
+
+        try {
+            const clean = decodeURIComponent(to).replace(/^\/+|\/+$/g, '');
+            const seg = clean.split('/').filter(Boolean).pop() || clean;
+            subDom.textContent = seg;
+        } catch (e) {
+            subDom.textContent = to;
+        }
+
+        location.replace(to);
+        setTimeout(() => { tipDom.classList.add('show'); }, 60000);
+
+        document.getElementById('retryLink').addEventListener('click', () => { location.replace(to); });
+        document.getElementById('backLink').addEventListener('click', () => { location.replace('/'); });
+    })();
+</script>
+</body>
+</html>
